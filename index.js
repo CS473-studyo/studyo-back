@@ -10,13 +10,12 @@ const helmet = require("koa-helmet");
 
 const app = new Koa();
 
-models.sequelize
-  .sync()
-  .then(() => {
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+try {
+  await models.sequelize.authenticate();
+  console.log('Connection has been established successfully.');
+} catch (error) {
+  console.error('Unable to connect to the database:', error);
+}
 
 app.use(cors({ credentials: true, origin: process.env.ORIGIN }));
 app.use(helmet());
