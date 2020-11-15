@@ -3,5 +3,6 @@ const course = new Router();
 const courseCtrl = require('./course.ctrl');
 
 course.post('/join/:id', courseCtrl.join);
+course.post('/list', courseCtrl.list);
 
 module.exports = course;

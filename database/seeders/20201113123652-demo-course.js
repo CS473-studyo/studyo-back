@@ -11,12 +11,26 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await queryInterface.bulkInsert('Course', [{
+   await queryInterface.bulkInsert('Course', [
+     {
      id: 1,
      name: 'social computing',
      prof: 'Juho Kim',
      code: 'CS473'
-   }], {});
+    },
+    {
+     id: 2,
+     name: 'social computing2',
+     prof: 'Juho Kim2',
+     code: 'CS4732'
+    },
+    {
+      id: "CS444",
+      name: 'social computing2',
+      prof: 'Juho Kim2',
+      code: 'CS4732'
+     }
+    ]);
   },
 
   down: async (queryInterface, Sequelize) => {
