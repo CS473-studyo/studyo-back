@@ -16,7 +16,6 @@ router.use("/show", lecture.routes());
 router.use("/word", keyword.routes()); 
 router.use("/writenote", note.routes());
 router.use("/group", studygroup.routes());
-
 router.use("/course", course.routes());
 
 module.exports = router;

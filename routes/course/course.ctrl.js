@@ -49,3 +49,28 @@ exports.list = async (ctx) => {
     ctx.body = courselist;
     ctx.status = 200;
 }
+
+exports.info = async (ctx) => {
+    console.log("course/info");
+    const { courseid } = ctx.params;
+    
+    const course = await models.Course.findOne({
+        where: { id: courseid },
+        // include: models.User,
+    });
+    ctx.assert(course, 400);
+    ctx.body = course;
+    ctx.status = 200;
+}
+
+exports.studentno = async (ctx) => {
+    console.log("course/studentno");
+    const { courseid } = ctx.params;
+
+    const course = await models.Course.findOne({
+        where: { id: courseid },
+        include: models.User,
+    });
+    ctx.assert(course, 400);
+    ctx.body = course.Users.length;
+}
