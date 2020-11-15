@@ -6,6 +6,7 @@ const lecture = require("./lecture");
 const keyword = require("./keyword");
 const note = require("./note");
 const studygroup = require("./studygroup");
+const course = require("./course");
 
 const router = new Router();
 
@@ -15,5 +16,7 @@ router.use("/show", lecture.routes());
 router.use("/word", keyword.routes()); 
 router.use("/writenote", note.routes());
 router.use("/group", studygroup.routes());
+
+router.use("/course", course.routes());
 
 module.exports = router;
