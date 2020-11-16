@@ -4,6 +4,6 @@ const lectureRouter = new Router();
 
 const lecture = require("./lecture")
 
-lectureRouter.post("/", lecture.show)
+lectureRouter.post("/show/:course", lecture.show)
 
 module.exports = lectureRouter;

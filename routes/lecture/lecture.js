@@ -1,9 +1,16 @@
 const models = require("../../database/models");
 
 exports.show = async (ctx) => {
-  console.log("received")
-  const { course, number } = ctx.request.body;
-  const new_lecture = await models.Lecture.create({ course, number });
-  ctx.assert(new_lecture, 500);
-  ctx.status = 204;
+  console.log("lecture/show")
+  const { course } = ctx.params;
+  console.log(course);
+
+  const lectures = await models.Lecture.findAll({
+    where: { course: course }
+  })
+
+  ctx.assert(lectures.length != 0, 401, "No lectures");
+
+  ctx.body = lectures;
+  ctx.status = 200;
 };

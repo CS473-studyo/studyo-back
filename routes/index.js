@@ -12,7 +12,7 @@ const router = new Router();
 
 router.use("/register", user.routes());
 router.use("/ask", quiz.routes());
-router.use("/show", lecture.routes());
+router.use("/lecture", lecture.routes());
 router.use("/word", keyword.routes()); 
 router.use("/writenote", note.routes());
 router.use("/group", studygroup.routes());
