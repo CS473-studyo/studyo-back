@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
+
 const jwtSecret = process.env.JWT_SECRET || 'not-a-secret-anymore';
 
-exports.generateToken = async (payload) => {
+const generateToken = async (payload) => {
   const sign = new Promise((resolve, reject) => {
     jwt.sign(
       payload,
@@ -15,8 +16,10 @@ exports.generateToken = async (payload) => {
       }
     );
   });
-  return await sign(payload);
+  return sign(payload);
 };
+
+exports.generateToken = generateToken;
 
 function decodeToken(token) {
   return new Promise((resolve, reject) => {

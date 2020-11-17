@@ -8,7 +8,7 @@ exports.register = async (ctx) => {
   const res = await models.User.findOne({ where: { email } });
   ctx.assert(!res, 400);
   // Generate random string of length 16
-  var salt = getRandomString(16);
+  const salt = getRandomString(16);
   const value = hashed(password, salt);
   ctx.response.body = await models.User.create({
     email,
@@ -34,7 +34,7 @@ exports.login = async (ctx) => {
 exports.register = async (ctx) => {
   console.log('received');
   const { email, password } = ctx.request.body;
-  const new_user = await models.User.create({ email, password });
-  ctx.assert(new_user, 500);
+  const newUser = await models.User.create({ email, password });
+  ctx.assert(newUser, 500);
   ctx.status = 204;
 };
