@@ -1,9 +1,12 @@
-const models = require("../../database/models");
+const models = require('@models');
 
 exports.group = async (ctx) => {
-  console.log("received")
+  console.log('received');
   const { course, creator } = ctx.request.body;
-  const new_studygroup = await models.Studygroup.create({ course, creator });
+  const new_studygroup = await models.Studygroup.create({
+    course,
+    creator,
+  });
   ctx.assert(new_studygroup, 500);
   ctx.status = 204;
 };

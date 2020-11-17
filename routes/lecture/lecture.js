@@ -1,7 +1,7 @@
-const models = require("../../database/models");
+const models = require('@models');
 
 exports.show = async (ctx) => {
-  console.log("received")
+  console.log('received');
   const { course, number } = ctx.request.body;
   const new_lecture = await models.Lecture.create({ course, number });
   ctx.assert(new_lecture, 500);

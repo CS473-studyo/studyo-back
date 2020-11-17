@@ -1,9 +1,40 @@
-const models = require("../../database/models");
+const models = require('@models');
+const { generateToken } = require('@utils/jwt');
+const { hashed, getRandomString } = require('@utils/crypto');
 
 exports.register = async (ctx) => {
-  console.log("received")
+  const { email, password, key } = ctx.request.body;
+  ctx.assert(!process.env.ADMIN_KEY || key === process.env.ADMIN_KEY, 404);
+  const res = await models.User.findOne({ where: { email } });
+  ctx.assert(!res, 400);
+  // Generate random string of length 16
+  const salt = getRandomString(16);
+  const value = hashed(password, salt);
+  ctx.response.body = await models.User.create({
+    email,
+    salt,
+    password: value,
+  });
+};
+
+exports.login = async (ctx) => {
   const { email, password } = ctx.request.body;
-  const new_user = await models.User.create({email, password});
-  ctx.assert(new_user, 500);
+  const res = await models.User.findOne({ where: { email } });
+  ctx.assert(res, 204);
+  const value = hashed(password, res.salt);
+  ctx.assert(value === res.password, 204);
+  const token = await generateToken({ id: res.id });
+  ctx.cookies.set(process.env.ACCESS_TOKEN, token, {
+    maxAge: 1000 * 60 * 60 * 24,
+    overwrite: true,
+  });
+  ctx.status = 204;
+};
+
+exports.register = async (ctx) => {
+  console.log('received');
+  const { email, password } = ctx.request.body;
+  const newUser = await models.User.create({ email, password });
+  ctx.assert(newUser, 500);
   ctx.status = 204;
 };

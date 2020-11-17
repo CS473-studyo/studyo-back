@@ -1,16 +1,16 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    "User",
+  const Course = sequelize.define(
+    "Course",
     {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-      salt: DataTypes.STRING,
+      name: DataTypes.STRING,
+      prof: DataTypes.STRING,
+      code: DataTypes.STRING,
     },
     {
       freezeTableName: true,
@@ -19,9 +19,9 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
-  User.associate = function (models) {
+  Course.associate = function (models) {
     // associations can be defined here
-    User.belongsToMany(models.Course, { through: 'User_Course' });
+    Course.belongsToMany(models.User, { through: 'User_Course' });
   };
-  return User;
+  return Course;
 };
