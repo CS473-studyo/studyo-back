@@ -1,17 +1,17 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const Keyword = sequelize.define(
-    "Keyword",
+  const Answer = sequelize.define(
+    "Answer",
     {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
+      question: DataTypes.STRING,
       user: DataTypes.STRING,
-      course: DataTypes.STRING,
-      lecture: DataTypes.STRING,
       content: DataTypes.STRING,
+      clap: DataTypes.INTEGER,
       salt: DataTypes.STRING,
     },
     {
@@ -21,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
-  Keyword.associate = function (models) {
+  Answer.associate = function (models) {
     // associations can be defined here
   };
-  return Keyword;
+  return Answer;
 };

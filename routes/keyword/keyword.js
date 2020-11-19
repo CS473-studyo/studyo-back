@@ -2,8 +2,9 @@ const models = require('@models');
 
 exports.word = async (ctx) => {
   console.log('received');
-  const { course, lecture, content } = ctx.request.body;
+  const { user, course, lecture, content } = ctx.request.body;
   const new_keyword = await models.Keyword.create({
+    user,
     course,
     lecture,
     content,

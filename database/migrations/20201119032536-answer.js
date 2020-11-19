@@ -8,15 +8,15 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable('Keyword', { 
+    await queryInterface.createTable('Answer', { 
       id: {
         type: Sequelize.UUID,
         primaryKey: true,
       },
+      question: Sequelize.STRING,
       user: Sequelize.STRING,
-      course: Sequelize.STRING,
-      lecture: Sequelize.STRING,
       content: Sequelize.STRING,
+      clap: Sequelize.INTEGER,
       salt: Sequelize.STRING, });
   },
 
@@ -26,8 +26,8 @@ module.exports = {
      *
      * Example:
      * await queryInterface.dropTable('users');
-     */    
-    await queryInterface.dropTable("Keyword");
+     */
+    await queryInterface.dropTable("Answer");
 
   }
 };
