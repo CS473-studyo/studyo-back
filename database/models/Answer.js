@@ -1,17 +1,15 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const Note = sequelize.define(
-    "Note",
+  const Answer = sequelize.define(
+    "Answer",
     {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      course: DataTypes.STRING,
-      lecture: DataTypes.STRING,
-      page: DataTypes.STRING,
-      author: DataTypes.STRING,
+      question: DataTypes.STRING,
+      user: DataTypes.STRING,
       content: DataTypes.STRING,
       clap: DataTypes.INTEGER,
       salt: DataTypes.STRING,
@@ -23,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
-  Note.associate = function (models) {
+  Answer.associate = function (models) {
     // associations can be defined here
   };
-  return Note;
+  return Answer;
 };
