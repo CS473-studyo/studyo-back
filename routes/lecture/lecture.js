@@ -1,4 +1,4 @@
-const models = require("../../database/models");
+const models = require('@models');
 
 exports.show = async (ctx) => {
   console.log("lecture/show")
