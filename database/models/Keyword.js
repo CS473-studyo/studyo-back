@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
+      user: DataTypes.STRING,
       course: DataTypes.STRING,
       lecture: DataTypes.STRING,
       content: DataTypes.STRING,

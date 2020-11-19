@@ -13,6 +13,7 @@ module.exports = {
         type: Sequelize.UUID,
         primaryKey: true,
       },
+      user: Sequelize.STRING,
       course: Sequelize.STRING,
       lecture: Sequelize.STRING,
       content: Sequelize.STRING,
