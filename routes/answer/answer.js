@@ -22,3 +22,14 @@ exports.others = async (ctx) => {
   ctx.body = answers;
   ctx.status = 200;
 }
+
+exports.myanswer= async (ctx) => {
+  console.log('answer/myanswer')
+  const quizId = ctx.request.body.id
+  const userId = ctx.request.body.userId
+  const answers = await models.Answer.findAll({
+  where: { question: quizId }, where: { user: userId }
+  });
+  ctx.body = answers;
+  ctx.status = 200;
+}

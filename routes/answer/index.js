@@ -6,5 +6,6 @@ const answer = require("./answer")
 
 answerRouter.post("/", answer.answering)
 answerRouter.post("/others", answer.others)
+answerRouter.post("/myanswer", answer.myanswer)
 
 module.exports = answerRouter;
