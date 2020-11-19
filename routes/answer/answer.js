@@ -12,3 +12,13 @@ exports.answering = async (ctx) => {
   ctx.assert(new_answer, 500);
   ctx.status = 204;
 };
+
+exports.others = async (ctx) => {
+  console.log('answer/others')
+  const quizId = ctx.request.body.id
+  const answers = await models.Answer.findAll({
+  where: { question: quizId },
+  });
+  ctx.body = answers;
+  ctx.status = 200;
+}
