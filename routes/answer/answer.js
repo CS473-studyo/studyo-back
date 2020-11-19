@@ -17,7 +17,7 @@ exports.others = async (ctx) => {
   console.log('answer/others')
   const quizId = ctx.request.body.id
   const answers = await models.Answer.findAll({
-  where: { question: quizId },
+  where: { question: quizId }
   });
   ctx.body = answers;
   ctx.status = 200;
@@ -28,7 +28,7 @@ exports.myanswer= async (ctx) => {
   const quizId = ctx.request.body.id
   const userId = ctx.request.body.userId
   const answers = await models.Answer.findAll({
-  where: { question: quizId }, where: { user: userId }
+  where: { question: quizId, user: userId }
   });
   ctx.body = answers;
   ctx.status = 200;
