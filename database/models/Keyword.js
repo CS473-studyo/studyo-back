@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   Keyword.associate = function (models) {
     // associations can be defined here
+    Keyword.belongsToMany(models.User, { through: 'User_Keyword' })
   };
   return Keyword;
 };
