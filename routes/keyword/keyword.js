@@ -7,7 +7,6 @@ exports.join = async (ctx) => {
     where: { id: userId },
   });
   ctx.assert(user, 401);
-  console.log('re')
   const { id } = ctx.params;
 
   const keyword = await models.Keyword.findOne({

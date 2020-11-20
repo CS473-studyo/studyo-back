@@ -1,5 +1,24 @@
 const models = require('@models');
 
+exports.join = async (ctx) => {
+  console.log('received');
+  const userId = ctx.request.body.id;
+  const user = await models.User.findOne({
+    where: { id: userId },
+  });
+  ctx.assert(user, 401);
+  const { id } = ctx.params;
+  const answer = await models.Answer.findOne({
+    where: { id },
+    include: models.User,
+  });
+  ctx.assert(answer, 400);
+
+  answer.addUser([user]);
+  ctx.body = answer.id;
+  ctx.status = 200;
+};
+
 exports.answering = async (ctx) => {
   console.log('answering');
   const { question, user, content } = ctx.request.body;

@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   Answer.associate = function (models) {
     // associations can be defined here
+    Answer.belongsToMany(models.User, { through: 'User_Answer' })
   };
   return Answer;
 };
