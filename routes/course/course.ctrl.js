@@ -31,46 +31,28 @@ exports.join = async (ctx) => {
 };
 
 exports.list = async (ctx) => {
-    console.log("course/list");
-    const userId = ctx.request.body.id;
-    const user = await models.User.findOne({
-        where: { id: userId },
-        include: models.Course,
-    });
-    
-    var courselist = '';
-    // console.log(user.Courses);
-    for (i in user.Courses) {
-        // console.log(user.Courses[i].name);
-        courselist = courselist + user.Courses[i].name + ',';
-    }
-    courselist = courselist.slice(0, -1);
-    console.log(courselist);
-    ctx.body = courselist;
-    ctx.status = 200;
-}
+  console.log('course/list');
+  const userId = ctx.request.body.id;
+  ctx.assert(userId, 400);
+  const user = await models.User.findOne({
+    where: { id: userId },
+    include: models.Course,
+  });
 
-exports.info = async (ctx) => {
-    console.log("course/info");
-    const { courseid } = ctx.params;
-    
-    const course = await models.Course.findOne({
-        where: { id: courseid },
-        // include: models.User,
-    });
-    ctx.assert(course, 400);
-    ctx.body = course;
-    ctx.status = 200;
-}
+  // var courselist = '';
+  // // console.log(user.Courses);
+  // for (i in user.Courses) {
+  //   // console.log(user.Courses[i].name);
+  //   courselist = courselist + user.Courses[i].name + ',';
+  // }
+  // courselist = courselist.slice(0, -1);
+  // console.log(courselist);
 
-exports.studentno = async (ctx) => {
-    console.log("course/studentno");
-    const { courseid } = ctx.params;
+  const courses = [];
+  user.Courses.forEach((course) => {
+    courses.push(course.name);
+  });
 
-    const course = await models.Course.findOne({
-        where: { id: courseid },
-        include: models.User,
-    });
-    ctx.assert(course, 400);
-    ctx.body = course.Users.length;
-}
+  ctx.body = courses;
+  ctx.status = 200;
+};

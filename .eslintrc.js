@@ -10,12 +10,13 @@ module.exports = {
   rules: {
     'jsx-a11y/href-no-hash': ['off'],
     'import/no-unresolved': ['off'],
+    'func-names': ['off'],
     'max-len': [
       'warn',
       {
         code: 75,
         tabWidth: 2,
-        comments: 75,
+        comments: 80,
         ignoreComments: false,
         ignoreTrailingComments: true,
         ignoreUrls: true,

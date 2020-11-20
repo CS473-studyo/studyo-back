@@ -10,26 +10,26 @@ module.exports = {
      *   name: 'John Doe',
      *   isBetaMember: false
      * }], {});
-    */
-   await queryInterface.bulkInsert('Course', [
-     {
-     id: 1,
-     name: 'social computing',
-     prof: 'Juho Kim',
-     code: 'CS473'
-    },
-    {
-     id: 2,
-     name: 'social computing2',
-     prof: 'Juho Kim2',
-     code: 'CS4732'
-    },
-    {
-      id: "CS444",
-      name: 'social computing2',
-      prof: 'Juho Kim2',
-      code: 'CS4732'
-     }
+     */
+    await queryInterface.bulkInsert('Course', [
+      {
+        id: 1,
+        name: 'social computing',
+        prof: 'Juho Kim',
+        code: 'CS473',
+      },
+      {
+        id: 2,
+        name: 'social computing2',
+        prof: 'Juho Kim2',
+        code: 'CS4732',
+      },
+      {
+        id: 'CS444',
+        name: 'social computing2',
+        prof: 'Juho Kim2',
+        code: 'CS4732',
+      },
     ]);
   },
 
@@ -40,6 +40,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('Course', null, {})
-  }
+    await queryInterface.bulkDelete('Course', null, {});
+  },
 };
