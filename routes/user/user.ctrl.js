@@ -18,8 +18,7 @@ exports.register = async (ctx) => {
 };
 
 exports.login = async (ctx) => {
-  ctx.assert(ctx.request.user, 401);
-  const userId = ctx.request.user.id;
+  // const { id } = ctx.request.user;
   const { email, password } = ctx.request.body;
   const res = await models.User.findOne({ where: { email } });
   ctx.assert(res, 204);
