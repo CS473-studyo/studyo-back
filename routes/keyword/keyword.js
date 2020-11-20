@@ -39,6 +39,8 @@ exports.list = async (ctx) => {
   const lecture  = ctx.request.body.lecture
   const keyword = await models.Keyword.findAll({
   where: { course: courseId, lecture: lecture },
+  limit: 3, 
+  order: 'follower DESC'
   });
   ctx.body = keyword;
   ctx.status = 200;
