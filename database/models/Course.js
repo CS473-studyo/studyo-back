@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Course = sequelize.define(
-    "Course",
+    'Course',
     {
       id: {
         type: DataTypes.UUID,
@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       freezeTableName: true,
-      charset: "utf8",
-      collate: "utf8_general_ci",
-      timestamps: false
+      charset: 'utf8',
+      collate: 'utf8_general_ci',
+      timestamps: false,
     }
   );
   Course.associate = function (models) {

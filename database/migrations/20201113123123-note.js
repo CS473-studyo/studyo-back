@@ -8,7 +8,7 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable('Note', { 
+    await queryInterface.createTable('Note', {
       id: {
         type: Sequelize.UUID,
         primaryKey: true,
@@ -18,7 +18,8 @@ module.exports = {
       page: Sequelize.STRING,
       author: Sequelize.STRING,
       content: Sequelize.STRING,
-      salt: Sequelize.STRING, });
+      salt: Sequelize.STRING,
+    });
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -28,7 +29,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable("Note");
-
-  }
+    await queryInterface.dropTable('Note');
+  },
 };

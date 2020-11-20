@@ -33,19 +33,26 @@ exports.join = async (ctx) => {
 exports.list = async (ctx) => {
   console.log('course/list');
   const userId = ctx.request.body.id;
+  ctx.assert(userId, 400);
   const user = await models.User.findOne({
     where: { id: userId },
     include: models.Course,
   });
 
-  var courselist = '';
-  // console.log(user.Courses);
-  for (i in user.Courses) {
-    // console.log(user.Courses[i].name);
-    courselist = courselist + user.Courses[i].name + ',';
-  }
-  courselist = courselist.slice(0, -1);
-  console.log(courselist);
-  ctx.body = courselist;
+  // var courselist = '';
+  // // console.log(user.Courses);
+  // for (i in user.Courses) {
+  //   // console.log(user.Courses[i].name);
+  //   courselist = courselist + user.Courses[i].name + ',';
+  // }
+  // courselist = courselist.slice(0, -1);
+  // console.log(courselist);
+
+  const courses = [];
+  user.Courses.forEach((course) => {
+    courses.push(course.name);
+  });
+
+  ctx.body = courses;
   ctx.status = 200;
 };
