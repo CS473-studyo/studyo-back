@@ -3,6 +3,7 @@ const keywordRouter = require('.');
 
 exports.join = async (ctx) => {
   console.log('received');
+  console.log(ctx.request)
   const userId = ctx.request.user.id;
   const user = await models.User.findOne({
     where: { id: userId },
@@ -39,9 +40,7 @@ exports.list = async (ctx) => {
   const courseId = ctx.request.body.course;
   const lecture = ctx.request.body.lecture;
   const keyword = await models.Keyword.findAll({
-    where: { course: courseId, lecture: lecture },
-    limit: 3,
-    order: 'follower DESC',
+    where: { course: courseId, lecture: lecture }
   });
 
   var keywordlist = '';
