@@ -12,14 +12,14 @@ const answer = require('./answer');
 
 const router = new Router();
 
-router.use("/register", user.routes());
-router.use("/ask", quiz.routes());
-router.use("/lecture", lecture.routes());
-router.use("/word", keyword.routes()); 
-router.use("/writenote", note.routes());
-router.use("/group", studygroup.routes());
-router.use("/course", course.routes());
-router.use("/question", question.routes());
+router.use('/register', user.routes());
+router.use('/quiz', quiz.routes());
+router.use('/show', lecture.routes());
+router.use('/word', keyword.routes());
+router.use('/writenote', note.routes());
+router.use('/group', studygroup.routes());
+router.use('/course', course.routes());
 router.use('/answering', answer.routes());
+router.use("/question", question.routes());
 
 module.exports = router;
