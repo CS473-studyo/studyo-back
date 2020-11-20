@@ -18,6 +18,8 @@ exports.register = async (ctx) => {
 };
 
 exports.login = async (ctx) => {
+  ctx.assert(ctx.request.user, 401);
+  const userId = ctx.request.user.id;
   const { email, password } = ctx.request.body;
   const res = await models.User.findOne({ where: { email } });
   ctx.assert(res, 204);
@@ -28,13 +30,5 @@ exports.login = async (ctx) => {
     maxAge: 1000 * 60 * 60 * 24,
     overwrite: true,
   });
-  ctx.status = 204;
-};
-
-exports.register = async (ctx) => {
-  console.log('received');
-  const { email, password } = ctx.request.body;
-  const newUser = await models.User.create({ email, password });
-  ctx.assert(newUser, 500);
   ctx.status = 204;
 };

@@ -16,7 +16,7 @@ const generateToken = async (payload) => {
       }
     );
   });
-  return sign(payload);
+  return sign;
 };
 
 exports.generateToken = generateToken;
