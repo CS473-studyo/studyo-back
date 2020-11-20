@@ -44,6 +44,7 @@ exports.clap = async (ctx) => {
   }
   console.log(answer);
   ctx.status = 200;
+}
 
 exports.others = async (ctx) => {
   console.log('answer/others')
