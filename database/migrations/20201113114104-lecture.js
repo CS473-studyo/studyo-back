@@ -9,13 +9,10 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     await queryInterface.createTable('Lecture', { 
-      id: {
-        type: Sequelize.UUID,
-        primaryKey: true,
-      },
+      id: Sequelize.INTEGER,
       course: Sequelize.STRING,
-      number: Sequelize.STRING,
-      salt: Sequelize.STRING, });
+      number: Sequelize.INTEGER,
+    });
   },
 
   down: async (queryInterface, Sequelize) => {

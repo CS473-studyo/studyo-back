@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       page: DataTypes.STRING,
       author: DataTypes.STRING,
       content: DataTypes.STRING,
+      clap: DataTypes.INTEGER,
       salt: DataTypes.STRING,
     },
     {

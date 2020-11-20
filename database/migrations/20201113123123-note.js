@@ -18,6 +18,7 @@ module.exports = {
       page: Sequelize.STRING,
       author: Sequelize.STRING,
       content: Sequelize.STRING,
+      clap: Sequelize.INTEGER,
       salt: Sequelize.STRING,
     });
   },

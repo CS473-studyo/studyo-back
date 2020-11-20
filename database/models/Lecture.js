@@ -4,13 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     "Lecture",
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.INTEGER,
         primaryKey: true,
       },
       course: DataTypes.STRING,
-      number: DataTypes.STRING,
-      salt: DataTypes.STRING,
+      number: DataTypes.INTEGER,
     },
     {
       freezeTableName: true,
@@ -21,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   Lecture.associate = function (models) {
     // associations can be defined here
+    Lecture.belongsTo(models.Course);
   };
   return Lecture;
 };
