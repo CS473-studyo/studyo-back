@@ -19,6 +19,6 @@ exports.quizList = async (ctx) => {
   const quizzes = await models.Quiz.findAll({
   where: { lecture: lecture }
   });
-  ctx.body = quizzes;
+  ctx.body = quizzes; 
   ctx.status = 200;
 }
