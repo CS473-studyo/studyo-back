@@ -31,8 +31,9 @@ exports.join = async (ctx) => {
 };
 
 exports.list = async (ctx) => {
-  console.log('course/list');
-  const userId = ctx.request.body.id;
+  console.log(ctx.request);
+  const userId = ctx.request.user.id;
+  
   ctx.assert(userId, 400);
   const user = await models.User.findOne({
     where: { id: userId },
@@ -48,11 +49,7 @@ exports.list = async (ctx) => {
   // courselist = courselist.slice(0, -1);
   // console.log(courselist);
 
-  const courses = [];
-  user.Courses.forEach((course) => {
-    courses.push(course.name);
-  });
 
-  ctx.body = courses;
+  ctx.body = user.Courses;
   ctx.status = 200;
 };
