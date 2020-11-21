@@ -2,7 +2,7 @@ const models = require('@models');
 
 exports.join = async (ctx) => {
   console.log('received');
-  const userId = ctx.request.body.id;
+  const userId = ctx.request.user.id;
   const user = await models.User.findOne({
     where: { id: userId },
   });
