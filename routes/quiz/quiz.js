@@ -13,13 +13,12 @@ exports.ask = async (ctx) => {
   ctx.status = 204;
 };
 
-exports.list = async (ctx) => {
-  console.log('quiz/list')
+exports.quizList = async (ctx) => {
   const courseId = ctx.request.body.courseId
   const lecture = ctx.request.body.lecture
   const quizzes = await models.Quiz.findAll({
   where: { lecture: lecture }
   });
-  ctx.body = quizzes;
+  ctx.body = quizzes; 
   ctx.status = 200;
 }
