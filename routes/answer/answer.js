@@ -61,7 +61,6 @@ exports.clap = async (ctx) => {
     answer.update({ clap: answer.clap + 1 });
     ctx.body = answer.clap;
   }
-  console.log(answer);
   ctx.status = 200;
 }
 
