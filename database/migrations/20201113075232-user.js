@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     /**
@@ -8,14 +6,15 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable('User', { 
+    await queryInterface.createTable('User', {
       id: {
         type: Sequelize.UUID,
         primaryKey: true,
       },
       email: Sequelize.STRING,
       password: Sequelize.STRING,
-      salt: Sequelize.STRING, });
+      salt: Sequelize.STRING,
+    });
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -25,6 +24,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable("User");
-  }
+    await queryInterface.dropTable('User');
+  },
 };

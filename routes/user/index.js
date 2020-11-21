@@ -6,5 +6,6 @@ const userCtrl = require('./user.ctrl');
 
 user.post('/register', userCtrl.register);
 user.post('/login', userCtrl.login);
+user.get('/check', userCtrl.check);
 
 module.exports = user;

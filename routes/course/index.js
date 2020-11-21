@@ -1,11 +1,10 @@
 const Router = require('koa-router');
 
-const course = new Router();
-const courseCtrl = require('./course.ctrl');
+const courseRouter = new Router();
+const course = require('./course');
 
-course.post('/join/:id', courseCtrl.join);
-course.post('/list', courseCtrl.list);
-// course.get('/info/:courseid', courseCtrl.info);
-// course.get('/studentno/:courseid', courseCtrl.studentno);
+courseRouter.get('/', course.userCourses);
+courseRouter.get('/:courseId', course.courseInfo);
+courseRouter.post('/join/:courseId', course.join);
 
-module.exports = course;
+module.exports = courseRouter;

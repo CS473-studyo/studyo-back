@@ -1,86 +1,67 @@
 const models = require('@models');
+const { checkAndGetUserId } = require('@utils/auth');
 
-exports.join = async (ctx) => {
-  console.log('received');
-  const userId = ctx.request.user.id;
-  const user = await models.User.findOne({
-    where: { id: userId },
-  });
-  ctx.assert(user, 401);
-  const { id } = ctx.params;
-  const answer = await models.Answer.findOne({
-    where: { id },
-    include: models.User,
-  });
-  ctx.assert(answer, 400);
-
-  answer.addUser([user]);
-  ctx.body = answer.id;
-  ctx.status = 200;
+const getQuestionId = (ctx) => {
+  const QuestionId = ctx.params.questionId;
+  ctx.assert(QuestionId, 400, '400: Question ID not sent');
+  return QuestionId;
 };
 
-exports.answering = async (ctx) => {
-  console.log('answering');
-  const { question, user, content } = ctx.request.body;
-  const new_answer = await models.Answer.create({
-    question, 
-    user, 
+exports.submit = async (ctx) => {
+  const UserId = await checkAndGetUserId(ctx);
+  const { content } = ctx.request.body;
+  const QuestionId = getQuestionId(ctx);
+
+  const question = await models.Question.findOne({ where: { id: QuestionId } });
+
+  ctx.assert(question, 404, '404: Question not found');
+
+  const answer = await models.Answer.findOne({ where: { QuestionId, UserId } });
+
+  if (answer) {
+    answer.content = content;
+    await answer.save();
+    ctx.status = 204;
+    return;
+  }
+
+  const newAnswer = await models.Answer.create({
+    QuestionId: question.id,
+    UserId,
     content,
     clap: 0,
   });
-  ctx.assert(new_answer, 500);
+
+  ctx.assert(newAnswer, 500, '500: Answer could not be created');
   ctx.status = 204;
 };
 
-exports.answerlist = async (ctx) => {
-  console.log('answering/list');
-  const { question } = ctx.request.body;
+exports.answers = async (ctx) => {
+  const QuestionId = getQuestionId(ctx);
 
   const answers = await models.Answer.findAll({
-    where: { question: question }
+    where: { QuestionId },
   });
-  
+
   ctx.body = answers;
-  ctx.status = 200;
+};
+
+exports.userAnswer = async (ctx) => {
+  const UserId = await checkAndGetUserId(ctx);
+  const QuestionId = getQuestionId(ctx);
+
+  const answer = await models.Answer.findOne({
+    where: { QuestionId, UserId },
+  });
+  ctx.body = answer;
 };
 
 exports.clap = async (ctx) => {
-  console.log('answering/clap');
-  const { id, user } = ctx.request.body;
-  
-  const answer = await models.Answer.findOne({
-    where: { id: id }
-  });
+  await checkAndGetUserId(ctx);
+  const AnswerId = ctx.params.answerId;
+  ctx.assert(AnswerId, 400, '400: Answer ID not sent');
 
-  ctx.assert(answer, 401);
+  await models.Answer.increment('clap', { where: { id: AnswerId } });
 
-  if (answer.user == user) {
-    ctx.body = answer.clap;
-  }
-  else {
-    answer.update({ clap: answer.clap + 1 });
-    ctx.body = answer.clap;
-  }
-  ctx.status = 200;
-}
-
-exports.others = async (ctx) => {
-  console.log('answer/others')
-  const quizId = ctx.request.body.id
-  const answers = await models.Answer.findAll({
-  where: { question: quizId }
-  });
-  ctx.body = answers;
-  ctx.status = 200;
-}
-
-exports.myanswer= async (ctx) => {
-  console.log('answer/myanswer')
-  const quizId = ctx.request.body.id
-  const userId = ctx.request.body.userId
-  const answers = await models.Answer.findAll({
-  where: { question: quizId, user: userId }
-  });
-  ctx.body = answers;
-  ctx.status = 200;
-}
+  ctx.status = 204;
+};

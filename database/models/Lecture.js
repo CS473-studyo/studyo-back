@@ -1,21 +1,18 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Lecture = sequelize.define(
     'Lecture',
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      course: DataTypes.STRING,
-      num: DataTypes.INTEGER,
-      date: DataTypes.STRING,
-      keyword: DataTypes.STRING,
+      number: DataTypes.INTEGER,
+      pdf: DataTypes.STRING,
+      date: DataTypes.DATE,
     },
     {
       freezeTableName: true,
-      charset: 'utf8',
-      collate: 'utf8_general_ci',
       timestamps: false,
     }
   );

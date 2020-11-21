@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@koa/cors": "^3.1.0",
+    "aws-sdk": "^2.797.0",
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.0",

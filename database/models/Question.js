@@ -1,7 +1,6 @@
-"use strict";
 module.exports = (sequelize, DataTypes) => {
   const Question = sequelize.define(
-    "Question",
+    'Question',
     {
       id: {
         type: DataTypes.UUID,
@@ -9,20 +8,17 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
       },
       title: DataTypes.STRING,
-      detail: DataTypes.STRING,
-      userId: DataTypes.STRING,
-      lecture: DataTypes.INTEGER,
+      content: DataTypes.TEXT,
     },
     {
       freezeTableName: true,
-      charset: "utf8",
-      collate: "utf8_general_ci",
-      timestamps: false
+      timestamps: false,
     }
   );
   Question.associate = function (models) {
     // associations can be defined here
-    Question.belongsToMany(models.User, { through: 'User_Question' });
+    Question.belongsTo(models.Lecture);
+    Question.belongsTo(models.User);
   };
   return Question;
 };

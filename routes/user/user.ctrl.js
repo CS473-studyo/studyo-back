@@ -1,11 +1,15 @@
 const models = require('@models');
 const { generateToken } = require('@utils/jwt');
 const { hashed, getRandomString } = require('@utils/crypto');
+const { checkAndGetUserId } = require('@utils/auth');
 
 exports.register = async (ctx) => {
   const { email, password, key } = ctx.request.body;
   ctx.assert(!process.env.ADMIN_KEY || key === process.env.ADMIN_KEY, 404);
-  const res = await models.User.findOne({ where: { email } });
+  const res = await models.User.findOne({
+    where: { email },
+    attributes: { include: ['email', 'password', 'salt'] },
+  });
   ctx.assert(!res, 400);
   // Generate random string of length 16
   const salt = getRandomString(16);
@@ -20,7 +24,10 @@ exports.register = async (ctx) => {
 exports.login = async (ctx) => {
   // const { id } = ctx.request.user;
   const { email, password } = ctx.request.body;
-  const res = await models.User.findOne({ where: { email } });
+  const res = await models.User.findOne({
+    where: { email },
+    attributes: { include: ['email', 'password', 'salt'] },
+  });
   ctx.assert(res, 204);
   const value = hashed(password, res.salt);
   ctx.assert(value === res.password, 204);
@@ -30,4 +37,9 @@ exports.login = async (ctx) => {
     overwrite: true,
   });
   ctx.status = 204;
+};
+
+exports.check = async (ctx) => {
+  const id = await checkAndGetUserId(ctx);
+  ctx.body = id;
 };

@@ -1,4 +1,5 @@
 const models = require('../models');
+const { hashed, getRandomString } = require('../../utils/crypto');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -11,30 +12,13 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-
-    const course = await models.Course.findOne({
-      where: { code: 'CS473' },
+    const salt = getRandomString(16);
+    const password = hashed('test', salt);
+    return models.User.create({
+      email: 'test',
+      salt,
+      password,
     });
-
-    const CourseId = course.id;
-
-    return models.Lecture.bulkCreate([
-      {
-        CourseId,
-        number: 1,
-        date: '2020 Aug. 8',
-      },
-      {
-        CourseId,
-        number: 2,
-        date: '2020 Aug. 10',
-      },
-      {
-        CourseId,
-        number: 3,
-        date: '2020 Aug. 15',
-      },
-    ]);
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -44,6 +28,8 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('Lecture', null, {});
+    await models.User.destroy({
+      where: { email: 'test' },
+    });
   },
 };

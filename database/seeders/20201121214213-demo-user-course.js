@@ -12,29 +12,22 @@ module.exports = {
      * }], {});
      */
 
-    const course = await models.Course.findOne({
-      where: { code: 'CS473' },
+    const user = await models.User.findOne({
+      where: { email: 'test' },
     });
 
-    const CourseId = course.id;
+    const courses = await models.Course.findAll();
 
-    return models.Lecture.bulkCreate([
-      {
-        CourseId,
-        number: 1,
-        date: '2020 Aug. 8',
-      },
-      {
-        CourseId,
-        number: 2,
-        date: '2020 Aug. 10',
-      },
-      {
-        CourseId,
-        number: 3,
-        date: '2020 Aug. 15',
-      },
-    ]);
+    return Promise.all(
+      courses.map((course) =>
+        queryInterface.bulkInsert('User_Course', [
+          {
+            UserId: user.id,
+            CourseId: course.id,
+          },
+        ])
+      )
+    );
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -44,6 +37,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('Lecture', null, {});
+    await queryInterface.bulkDelete('User_Course', null, {});
   },
 };
