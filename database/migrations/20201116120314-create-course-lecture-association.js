@@ -21,44 +21,6 @@ module.exports = {
         onDelete: 'SET NULL',
       },
     )
-    // .then(() => {
-    //   // Student hasMany Payment
-    //   return queryInterface.addColumn(
-    //     'Lecture', // name of Target model
-    //     'LectureId', // name of the key we're adding
-    //     {
-    //       type: Sequelize.INTEGER,
-    //       references: {
-    //         model: 'Lecture', // name of Source model
-    //         key: 'id',
-    //       },
-    //       onUpdate: 'CASCADE',
-    //       onDelete: 'SET NULL',
-    //     },
-    //   );
-    // });
-    // await queryInterface.createTable('Course_Lecture', {
-    //   CourseId: {
-    //     type: Sequelize.UUID,
-    //     references: {
-    //       model: 'Course',
-    //       key: 'id'
-    //     },
-    //     onUpdate: 'CASCADE',
-    //     onDelete: 'CASCADE',
-    //   },
-    //   LectureId: {
-    //     type: Sequelize.INTEGER,
-    //     references: {
-    //       model: 'Lecture',
-    //       key: 'id'
-    //     },
-    //     onUpdate: 'CASCADE',
-    //     onDelete: 'CASCADE',
-    //   },
-    //   createdAt: Sequelize.DATE,
-    //   updatedAt: Sequelize.DATE,
-    // });
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -72,13 +34,5 @@ module.exports = {
       'Lecture',
       'CourseId',
     )
-    // .then(() => {
-    //   // remove Student hasMany Payment
-    //   return queryInterface.removeColumn(
-    //     'Lecture', // name of the Target model
-    //     'LectureId', // key we want to remove
-    //   );
-    // });
-    // await queryInterface.dropTable('Course_Lecture');
   }
 };

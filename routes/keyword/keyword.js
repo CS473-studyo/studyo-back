@@ -1,7 +1,9 @@
 const models = require('@models');
+const keywordRouter = require('.');
 
 exports.join = async (ctx) => {
   console.log('received');
+  console.log(ctx.request)
   const userId = ctx.request.user.id;
   const user = await models.User.findOne({
     where: { id: userId },
@@ -34,12 +36,20 @@ exports.word = async (ctx) => {
 };
 
 exports.list = async (ctx) => {
-  console.log('keyword/list')
-  const courseId = ctx.request.body.course
-  const lecture  = ctx.request.body.lecture
+  console.log('keyword/list');
+  const courseId = ctx.request.body.course;
+  const lecture = ctx.request.body.lecture;
   const keyword = await models.Keyword.findAll({
-  where: { course: courseId, lecture: lecture },
+    where: { course: courseId, lecture: lecture }
   });
-  ctx.body = keyword;
+
+  var keywordlist = '';
+  for (i in keyword) {
+    console.log(keyword[i].content);
+    keywordlist = keywordlist + keyword[i].content + ',';
+  }
+  keywordlist = keywordlist.slice(0, -1);
+
+  ctx.body = keywordlist;
   ctx.status = 200;
-}
+};
