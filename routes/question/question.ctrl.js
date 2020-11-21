@@ -18,7 +18,7 @@ exports.post = async (ctx) => {
   ctx.status = 204;
 };
 
-exports.list = async (ctx) => {
+exports.list = async (ctx) => { //my question
     console.log("question/list");
     const userId = ctx.request.body.userid;
 
@@ -33,3 +33,12 @@ exports.list = async (ctx) => {
     ctx.body = user.Questions;
     ctx.status = 200;
 }
+
+exports.quizList = async (ctx) => {
+    const lecture = ctx.request.body.lecture
+    const quizzes = await models.Quiz.findAll({ //todo: except my Q
+    where: { lecture: lecture }
+    });
+    ctx.body = quizzes;
+    ctx.status = 200;
+  }
