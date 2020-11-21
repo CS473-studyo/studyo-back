@@ -8,7 +8,6 @@ exports.post = async (ctx) => {
       where: { id: userid },
   });
   ctx.assert(user, 401);
-  console.log(userid);
   
   const new_question = await models.Question.create({ title, detail, userId: userid, lecture });
   ctx.assert(new_question, 500);
@@ -36,7 +35,7 @@ exports.list = async (ctx) => { //my question
 
 exports.quizList = async (ctx) => {
     const lecture = ctx.request.body.lecture
-    const quizzes = await models.Quiz.findAll({ //todo: except my Q
+    const quizzes = await models.Question.findAll({ //todo: except my Q
     where: { lecture: lecture }
     });
     ctx.body = quizzes;
