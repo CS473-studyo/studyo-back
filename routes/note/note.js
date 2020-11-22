@@ -1,7 +1,6 @@
 const models = require('@models');
 const { checkAndGetUserId } = require('@utils/auth');
 const { uploadFile } = require('@utils/aws');
-const { pdfToPng, clearPngDirectory } = require('@utils/conversion');
 
 exports.submit = async (ctx) => {
   const UserId = await checkAndGetUserId(ctx);
