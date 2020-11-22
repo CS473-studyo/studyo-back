@@ -6,7 +6,13 @@ exports.userCourses = async (ctx) => {
 
   const user = await models.User.findOne({
     where: { id: UserId },
-    include: models.Course,
+    include: {
+      model: models.Course,
+      include: {
+        model: models.User,
+        attributes: ['id'],
+      },
+    },
   });
 
   ctx.body = user.Courses;
@@ -38,7 +44,7 @@ exports.courseLectures = async (ctx) => {
     include: [
       {
         model: models.Lecture,
-        attributes: ['number', 'date'],
+        attributes: ['id', 'number', 'date'],
         include: [
           {
             model: models.Keyword,

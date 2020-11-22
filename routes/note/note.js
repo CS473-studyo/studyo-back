@@ -1,13 +1,21 @@
 const models = require('@models');
 const { checkAndGetUserId } = require('@utils/auth');
 
-exports.writenote = async (ctx) => {
-  console.log('received');
-  const { id, LectureId, UserId, page, image, clap } = ctx.request.body;
-  const new_note = await models.Note.create({
-    id, LectureId, UserId, page, image, clap
+exports.submit = async (ctx) => {
+  const UserId = await checkAndGetUserId(ctx);
+
+  const LectureId = ctx.params.lectureId;
+  ctx.assert(LectureId, 400, '400: Lecture ID not sent');
+
+  const { page, image } = ctx.request.body;
+  const note = await models.Note.create({
+    LectureId,
+    UserId,
+    page,
+    image,
+    clap: 0,
   });
-  ctx.assert(new_note, 500);
+  ctx.assert(note, 500);
   ctx.status = 204;
 };
 
@@ -16,6 +24,6 @@ exports.clap = async (ctx) => {
   const NoteId = ctx.params.noteId;
   ctx.assert(NoteId, 400, '400: Note ID not sent');
   await models.Note.increment('clap', { where: { id: NoteId } });
-  
+
   ctx.status = 204;
 };
