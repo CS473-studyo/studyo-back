@@ -22,7 +22,7 @@ exports.submit = async (ctx) => {
 exports.userQuestions = async (ctx) => {
   const UserId = await checkAndGetUserId(ctx);
 
-  const questions = await models.Question.findOne({
+  const questions = await models.Question.findAll({
     where: { UserId },
   });
 
