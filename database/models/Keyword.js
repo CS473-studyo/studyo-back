@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     }); // Users who voted for the keyword
     Keyword.belongsTo(models.User); // User who created keyword
-    Keyword.belongsTo(models.Lecture); // User who created keyword
+    Keyword.belongsTo(models.Lecture);
   };
   return Keyword;
 };
