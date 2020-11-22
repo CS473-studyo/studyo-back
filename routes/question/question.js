@@ -42,3 +42,15 @@ exports.lectureQuestions = async (ctx) => {
   ctx.body = quizzes;
   ctx.status = 200;
 };
+
+exports.getQuestion = async (ctx) => {
+  const QuestionId = ctx.params.questionId;
+  ctx.assert(QuestionId, 400, '400: LectureId not sent');
+
+  const quiz = await models.Question.findOne({
+    where: { id: QuestionId },
+  });
+
+  ctx.body = quiz;
+  ctx.status = 200;
+};
