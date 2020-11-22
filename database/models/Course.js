@@ -10,6 +10,12 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       professor: DataTypes.STRING,
       code: DataTypes.STRING,
+      userNumber: {
+        type: DataTypes.VIRTUAL,
+        get: function () {
+          return this.Users.length;
+        },
+      },
     },
     {
       freezeTableName: true,
