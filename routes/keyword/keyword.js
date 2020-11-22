@@ -3,22 +3,27 @@ const keywordRouter = require('.');
 
 exports.join = async (ctx) => {
   console.log('received');
-  console.log(ctx.request)
+  // console.log(ctx.request)
   const userId = ctx.request.user.id;
   const user = await models.User.findOne({
     where: { id: userId },
   });
   ctx.assert(user, 401);
   const { id } = ctx.params;
-
+  // console.log(id);
   const keyword = await models.Keyword.findOne({
     where: { id },
     include: models.User,
   });
   ctx.assert(keyword, 400);
+  // console.log(keyword.content);
 
   keyword.addUser([user]);
-  ctx.body = keyword.id;
+
+  // console.log(keyword);
+  // console.log(keyword.Users.length);
+  // keyword.update({ vote: keyword.Users.length });
+  ctx.body = keyword;
   ctx.status = 200;
 };
 
@@ -30,6 +35,7 @@ exports.word = async (ctx) => {
     course,
     lecture,
     content,
+    vote: 0,
   });
   ctx.assert(new_keyword, 500);
   ctx.status = 204;
@@ -40,8 +46,11 @@ exports.list = async (ctx) => {
   const courseId = ctx.request.body.course;
   const lecture = ctx.request.body.lecture;
   const keyword = await models.Keyword.findAll({
-    where: { course: courseId, lecture: lecture }
+    where: { course: courseId, lecture: lecture },
+    include: models.User,
   });
+
+  console.log(keyword);
 
   var keywordlist = '';
   for (i in keyword) {

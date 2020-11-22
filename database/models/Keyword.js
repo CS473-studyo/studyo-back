@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Keyword = sequelize.define(
-    "Keyword",
+    'Keyword',
     {
       id: {
         type: DataTypes.UUID,
@@ -12,18 +12,19 @@ module.exports = (sequelize, DataTypes) => {
       course: DataTypes.STRING,
       lecture: DataTypes.STRING,
       content: DataTypes.STRING,
+      vote: DataTypes.INTEGER,
       salt: DataTypes.STRING,
     },
     {
       freezeTableName: true,
-      charset: "utf8",
-      collate: "utf8_general_ci",
-      timestamps: false
+      charset: 'utf8',
+      collate: 'utf8_general_ci',
+      timestamps: false,
     }
   );
   Keyword.associate = function (models) {
     // associations can be defined here
-    Keyword.belongsToMany(models.User, { through: 'User_Keyword' })
+    Keyword.belongsToMany(models.User, { through: 'User_Keyword' });
   };
   return Keyword;
 };
