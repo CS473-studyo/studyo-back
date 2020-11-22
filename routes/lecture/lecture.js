@@ -35,3 +35,16 @@ exports.uploadPdf = async (ctx) => {
 
   ctx.body = { key, url };
 };
+
+exports.lectureInfo = async (ctx) => {
+  const LectureId = ctx.params.lectureId;
+  ctx.assert(LectureId, 400, '400: LectureId not sent');
+
+  const lecture = await models.Lecture.findOne({
+    where: { id: LectureId },
+  });
+
+  ctx.assert(lecture, 404, '404: Lecture not found');
+  ctx.body = lecture;
+  ctx.status = 200;
+};
