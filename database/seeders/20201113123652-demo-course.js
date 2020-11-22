@@ -1,4 +1,4 @@
-'use strict';
+const models = require('../models');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -11,24 +11,21 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert('Course', [
+    await models.Course.bulkCreate([
       {
-        id: 1,
-        name: 'social computing',
-        prof: 'Juho Kim',
+        name: 'Social Computing',
+        professor: 'Juho Kim',
         code: 'CS473',
       },
       {
-        id: 2,
-        name: 'social computing2',
-        prof: 'Juho Kim2',
-        code: 'CS4732',
+        name: 'Social Computing 2',
+        professor: 'Juho Kim 2',
+        code: 'CS472',
       },
       {
-        id: 'CS444',
-        name: 'social computing2',
-        prof: 'Juho Kim2',
-        code: 'CS4732',
+        name: 'Social Computing 3',
+        professor: 'Juho Kim 3',
+        code: 'CS475',
       },
     ]);
   },

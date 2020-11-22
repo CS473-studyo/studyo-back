@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     /**
@@ -13,13 +11,27 @@ module.exports = {
         type: Sequelize.UUID,
         primaryKey: true,
       },
-      course: Sequelize.STRING,
-      lecture: Sequelize.STRING,
-      page: Sequelize.STRING,
-      author: Sequelize.STRING,
-      content: Sequelize.STRING,
+      LectureId: {
+        type: Sequelize.UUID,
+        references: {
+          model: 'Lecture',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      UserId: {
+        type: Sequelize.UUID,
+        references: {
+          model: 'User',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      page: Sequelize.INTEGER,
+      image: Sequelize.STRING,
       clap: Sequelize.INTEGER,
-      salt: Sequelize.STRING,
     });
   },
 

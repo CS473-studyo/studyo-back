@@ -1,9 +1,10 @@
-const Router = require("koa-router");
+const Router = require('koa-router');
 
 const lectureRouter = new Router();
 
-const lecture = require("./lecture")
+const lecture = require('./lecture');
 
-lectureRouter.post("/show/:course", lecture.show)
+lectureRouter.get('/:courseId', lecture.courseLectures);
+lectureRouter.post('/pdf/:lectureId', lecture.uploadPdf);
 
 module.exports = lectureRouter;

@@ -1,55 +1,55 @@
 const models = require('@models');
-const keywordRouter = require('.');
+const { checkAndGetUserId } = require('@utils/auth');
 
-exports.join = async (ctx) => {
-  console.log('received');
-  console.log(ctx.request)
-  const userId = ctx.request.user.id;
-  const user = await models.User.findOne({
-    where: { id: userId },
-  });
-  ctx.assert(user, 401);
-  const { id } = ctx.params;
-
-  const keyword = await models.Keyword.findOne({
-    where: { id },
-    include: models.User,
-  });
-  ctx.assert(keyword, 400);
-
-  keyword.addUser([user]);
-  ctx.body = keyword.id;
-  ctx.status = 200;
+const getLectureId = (ctx) => {
+  const LectureId = ctx.params.lectureId;
+  ctx.assert(LectureId, 400, '400: Lecture ID not sent');
+  return LectureId;
 };
 
-exports.word = async (ctx) => {
-  console.log('received');
-  const { user, course, lecture, content } = ctx.request.body;
-  const new_keyword = await models.Keyword.create({
-    user,
-    course,
-    lecture,
-    content,
+exports.lectureKeywords = async (ctx) => {
+  const LectureId = getLectureId(ctx);
+
+  const keywords = await models.Keyword.findAll({
+    where: { LectureId },
+    include: models.User,
   });
-  ctx.assert(new_keyword, 500);
+
+  ctx.body = keywords;
+};
+
+exports.submit = async (ctx) => {
+  const UserId = await checkAndGetUserId(ctx);
+  const LectureId = getLectureId(ctx);
+  const { word } = ctx.request.body;
+
+  const keyword = models.Keyword.create({
+    UserId,
+    LectureId,
+    word,
+  });
+
+  ctx.assert(keyword, 500, '500: Keyword could not be created');
+
   ctx.status = 204;
 };
 
-exports.list = async (ctx) => {
-  console.log('keyword/list');
-  const courseId = ctx.request.body.course;
-  const lecture = ctx.request.body.lecture;
-  const keyword = await models.Keyword.findAll({
-    where: { course: courseId, lecture: lecture }
+exports.vote = async (ctx) => {
+  const UserId = await checkAndGetUserId(ctx);
+  const user = await models.User.findOne({
+    where: { id: UserId },
   });
 
-  var keywordlist = '';
-  for (i in keyword) {
-    console.log(keyword[i].content);
-    keywordlist = keywordlist + keyword[i].content + ',';
-  }
-  keywordlist = keywordlist.slice(0, -1);
+  const KeywordId = ctx.params.keywordId;
+  ctx.assert(KeywordId, 400, '400: Keyword ID not sent');
 
-  ctx.body = keywordlist;
+  const keyword = await models.Keyword.findOne({
+    where: { id: KeywordId },
+  });
+
+  ctx.assert(keyword, 404, '404: Keyword not found');
+
+  keyword.addUser(user);
+  ctx.body = keyword.id;
   ctx.status = 200;
 };

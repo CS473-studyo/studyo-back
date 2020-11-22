@@ -24,9 +24,10 @@ const run = async () => {
   app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
   app.use(helmet());
   app.use(logger());
-  app.use(bodyParser());
+  app.use(bodyParser({ multipart: true }));
   app.use(jwtMiddleware);
-  app.use(router.routes()).use(router.allowedMethods());
+  app.use(router.routes());
+  app.use(router.allowedMethods());
 
   app.listen(PORT);
 };

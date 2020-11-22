@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     /**
@@ -8,16 +6,24 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable('Keyword', { 
+    await queryInterface.createTable('Lecture', {
       id: {
         type: Sequelize.UUID,
         primaryKey: true,
       },
-      user: Sequelize.STRING,
-      course: Sequelize.STRING,
-      lecture: Sequelize.STRING,
-      content: Sequelize.STRING,
-      salt: Sequelize.STRING, });
+      CourseId: {
+        type: Sequelize.UUID,
+        references: {
+          model: 'Course',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      number: Sequelize.INTEGER,
+      pdf: Sequelize.STRING,
+      date: Sequelize.DATE,
+    });
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -26,8 +32,7 @@ module.exports = {
      *
      * Example:
      * await queryInterface.dropTable('users');
-     */    
-    await queryInterface.dropTable("Keyword");
-
-  }
+     */
+    await queryInterface.dropTable('Lecture');
+  },
 };

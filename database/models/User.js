@@ -13,17 +13,26 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       freezeTableName: true,
-      charset: 'utf8',
-      collate: 'utf8_general_ci',
       timestamps: false,
+      defaultScope: {
+        attributes: { exclude: ['email', 'password', 'salt'] },
+      },
     }
   );
   User.associate = function (models) {
     // associations can be defined here
-    User.belongsToMany(models.Course, { through: 'User_Course' });
-    User.belongsToMany(models.Question, { through: 'User_Question' });
-    User.belongsToMany(models.Keyword, { through: 'User_Keyword' });
-    User.belongsToMany(models.Answer, { through: 'User_Answer'});
+    User.belongsToMany(models.Course, {
+      through: 'User_Course',
+      timestamps: false,
+    });
+    User.belongsToMany(models.Keyword, {
+      through: 'User_Keyword',
+      timestamps: false,
+    });
+    User.hasMany(models.Answer);
+    User.hasMany(models.Keyword);
+    User.hasMany(models.Note);
+    User.hasMany(models.Question);
   };
   return User;
 };
