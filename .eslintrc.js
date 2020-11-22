@@ -11,6 +11,7 @@ module.exports = {
     'jsx-a11y/href-no-hash': ['off'],
     'import/no-unresolved': ['off'],
     'func-names': ['off'],
+    'object-shorthand': ['off'],
     'max-len': [
       'warn',
       {
