@@ -3,7 +3,7 @@ const { checkAndGetUserId } = require('@utils/auth');
 
 const getLectureId = (ctx) => {
   const LectureId = ctx.params.lectureId;
-  ctx.assert(LectureId, 400, '400: Lecture ID not sent');
+  ctx.assert(LectureId, 400, '400: LectureId not sent');
   return LectureId;
 };
 
@@ -41,7 +41,7 @@ exports.vote = async (ctx) => {
   });
 
   const KeywordId = ctx.params.keywordId;
-  ctx.assert(KeywordId, 400, '400: Keyword ID not sent');
+  ctx.assert(KeywordId, 400, '400: KeywordId not sent');
 
   const keyword = await models.Keyword.findOne({
     where: { id: KeywordId },

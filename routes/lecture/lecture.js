@@ -3,7 +3,7 @@ const { uploadFile } = require('@utils/aws');
 
 exports.courseLectures = async (ctx) => {
   const CourseId = ctx.params.courseId;
-  ctx.assert(CourseId, 400, '400: Course ID not sent');
+  ctx.assert(CourseId, 400, '400: CourseId not sent');
 
   const lectures = await models.Lecture.findAll({
     where: { CourseId },
@@ -15,7 +15,7 @@ exports.courseLectures = async (ctx) => {
 
 exports.uploadPdf = async (ctx) => {
   const LectureId = ctx.params.lectureId;
-  ctx.assert(LectureId, 400, '400: Lecture ID not sent');
+  ctx.assert(LectureId, 400, '400: LectureId not sent');
 
   const lecture = await models.Lecture.findOne({
     where: { id: LectureId },

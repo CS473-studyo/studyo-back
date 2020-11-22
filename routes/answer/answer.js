@@ -3,7 +3,7 @@ const { checkAndGetUserId } = require('@utils/auth');
 
 const getQuestionId = (ctx) => {
   const QuestionId = ctx.params.questionId;
-  ctx.assert(QuestionId, 400, '400: Question ID not sent');
+  ctx.assert(QuestionId, 400, '400: QuestionId not sent');
   return QuestionId;
 };
 
@@ -59,7 +59,7 @@ exports.userAnswer = async (ctx) => {
 exports.clap = async (ctx) => {
   await checkAndGetUserId(ctx);
   const AnswerId = ctx.params.answerId;
-  ctx.assert(AnswerId, 400, '400: Answer ID not sent');
+  ctx.assert(AnswerId, 400, '400: AnswerId not sent');
 
   await models.Answer.increment('clap', { where: { id: AnswerId } });
 

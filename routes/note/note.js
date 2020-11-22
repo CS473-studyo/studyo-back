@@ -5,7 +5,7 @@ exports.submit = async (ctx) => {
   const UserId = await checkAndGetUserId(ctx);
 
   const LectureId = ctx.params.lectureId;
-  ctx.assert(LectureId, 400, '400: Lecture ID not sent');
+  ctx.assert(LectureId, 400, '400: LectureId not sent');
 
   const { page, image } = ctx.request.body;
   const note = await models.Note.create({
@@ -22,7 +22,7 @@ exports.submit = async (ctx) => {
 exports.clap = async (ctx) => {
   await checkAndGetUserId(ctx);
   const NoteId = ctx.params.noteId;
-  ctx.assert(NoteId, 400, '400: Note ID not sent');
+  ctx.assert(NoteId, 400, '400: NoteId not sent');
   await models.Note.increment('clap', { where: { id: NoteId } });
 
   ctx.status = 204;

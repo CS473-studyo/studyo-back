@@ -20,7 +20,7 @@ exports.userCourses = async (ctx) => {
 
 exports.courseInfo = async (ctx) => {
   const { code } = ctx.params;
-  ctx.assert(code, 400, '400: Code ID not sent');
+  ctx.assert(code, 400, '400: CodeId not sent');
 
   const course = await models.Course.findOne({
     where: { code },
@@ -78,7 +78,7 @@ exports.join = async (ctx) => {
   const user = await models.User.findOne({ where: { id: UserId } });
 
   const CourseId = ctx.params.courseId;
-  ctx.assert(CourseId, 400, '400: Course ID not sent');
+  ctx.assert(CourseId, 400, '400: CourseId not sent');
 
   const course = await models.Course.findOne({
     where: { id: CourseId },
