@@ -14,7 +14,7 @@ const router = new Router();
 router.use('/user', user.routes());
 router.use('/lecture', lecture.routes());
 router.use('/keyword', keyword.routes());
-router.use('/writenote', note.routes());
+router.use('/note', note.routes());
 router.use('/group', studygroup.routes());
 router.use('/course', course.routes());
 router.use('/answer', answer.routes());

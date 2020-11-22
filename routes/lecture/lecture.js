@@ -23,9 +23,11 @@ exports.uploadPdf = async (ctx) => {
 
   ctx.assert(lecture, 404, '404: Lecture not found');
 
+  const fileName = `${LectureId}.pdf`;
+
   const { file } = ctx.request.files;
   const { key, url } = await uploadFile({
-    fileName: file.name,
+    fileName,
     filePath: file.path,
     fileType: file.type,
   });

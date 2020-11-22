@@ -1,22 +1,51 @@
 const models = require('@models');
 const { checkAndGetUserId } = require('@utils/auth');
+const { uploadFile } = require('@utils/aws');
+const { pdfToPng, clearPngDirectory } = require('@utils/conversion');
 
 exports.submit = async (ctx) => {
   const UserId = await checkAndGetUserId(ctx);
 
   const LectureId = ctx.params.lectureId;
   ctx.assert(LectureId, 400, '400: LectureId not sent');
+  const lecture = await models.Lecture.findOne({
+    where: { id: LectureId },
+  });
 
-  const { page, image } = ctx.request.body;
-  const note = await models.Note.create({
-    LectureId,
+  ctx.assert(lecture, 404, '404: Lecture not found');
+
+  const fileName = `${UserId}--${LectureId}.pdf`;
+
+  const { file } = ctx.request.files;
+  ctx.assert(file, 400, '400: file not sent');
+
+  const { key, url } = await uploadFile({
+    fileName,
+    filePath: file.path,
+    fileType: file.type,
+  });
+
+  const note = await models.Note.findOne({
+    where: {
+      UserId,
+    },
+  });
+
+  if (note) {
+    note.pdf = url;
+    await note.save();
+    ctx.body = { key, url };
+    return;
+  }
+
+  await models.Note.create({
     UserId,
-    page,
-    image,
+    LectureId,
+    pdf: url,
     clap: 0,
   });
-  ctx.assert(note, 500);
-  ctx.status = 204;
+
+  ctx.body = { key, url };
 };
 
 exports.clap = async (ctx) => {
