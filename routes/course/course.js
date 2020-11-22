@@ -23,6 +23,32 @@ exports.courseInfo = async (ctx) => {
   ctx.body = course;
 };
 
+exports.courseLectures = async (ctx) => {
+  const { code } = ctx.params;
+  ctx.assert(code, 400, '400: Course code not sent');
+
+  const course = await models.Course.findOne({
+    where: { code },
+    include: [
+      {
+        model: models.Lecture,
+        attributes: ['number', 'date'],
+        include: [
+          {
+            model: models.Keyword,
+            attributes: ['word'],
+          },
+        ],
+      },
+    ],
+    order: [[models.Lecture, 'number', 'ASC']],
+  });
+
+  ctx.assert(course, 404, '404: Course not found');
+
+  ctx.body = course.Lectures;
+};
+
 exports.join = async (ctx) => {
   const UserId = await checkAndGetUserId(ctx);
 
