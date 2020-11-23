@@ -7,11 +7,9 @@ npm start
 ```
 
 ## database
-migrations
+Database consists of 3 folder : ./migrations, ./models, ./seeders
 
-models
 
-seeders
 
 ## routes
 In routes, there are routers that communicate with front end by request. For example in ./user/index.js, router get front-end's post request "login", and implement login function in ./user/user.js.
