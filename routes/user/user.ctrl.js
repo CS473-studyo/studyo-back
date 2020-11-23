@@ -4,17 +4,18 @@ const { hashed, getRandomString } = require('@utils/crypto');
 const { checkAndGetUserId } = require('@utils/auth');
 
 exports.register = async (ctx) => {
-  const { email, password, key } = ctx.request.body;
+  const { name, email, password, key } = ctx.request.body;
   ctx.assert(!process.env.ADMIN_KEY || key === process.env.ADMIN_KEY, 404);
   const res = await models.User.findOne({
     where: { email },
     attributes: { include: ['email', 'password', 'salt'] },
   });
-  ctx.assert(!res, 400);
+  ctx.assert(!res, 400, 'The email is already taken.');
   // Generate random string of length 16
   const salt = getRandomString(16);
   const value = hashed(password, salt);
   ctx.response.body = await models.User.create({
+    name,
     email,
     salt,
     password: value,
@@ -22,15 +23,14 @@ exports.register = async (ctx) => {
 };
 
 exports.login = async (ctx) => {
-  // const { id } = ctx.request.user;
   const { email, password } = ctx.request.body;
   const res = await models.User.findOne({
     where: { email },
     attributes: { include: ['email', 'password', 'salt'] },
   });
-  ctx.assert(res, 204);
+  ctx.assert(res, 400, 'The account does not exist.');
   const value = hashed(password, res.salt);
-  ctx.assert(value === res.password, 204);
+  ctx.assert(value === res.password, 401, 'The password is incorrect.');
   const token = await generateToken({ id: res.id });
   ctx.cookies.set(process.env.ACCESS_TOKEN, token, {
     maxAge: 1000 * 60 * 60 * 24,
@@ -42,4 +42,9 @@ exports.login = async (ctx) => {
 exports.check = async (ctx) => {
   const id = await checkAndGetUserId(ctx);
   ctx.body = id;
+};
+
+exports.logout = async (ctx) => {
+  ctx.cookies.set(process.env.ACCESS_TOKEN, null);
+  ctx.status = 204;
 };

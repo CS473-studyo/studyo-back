@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       salt: DataTypes.STRING,
+      name: DataTypes.STRING,
     },
     {
       freezeTableName: true,
