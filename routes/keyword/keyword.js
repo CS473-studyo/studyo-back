@@ -38,9 +38,9 @@ exports.dropVote = async (ctx) => {
 
   console.log(user.Keywords);
   // user.Keywords = [];
-  await models.Keyword.destroy({ where: { UserId: user.id } });
+  await models.User_Keyword.destroy({ where: { UserId: user.id } });
   await user.reload();
-  ctx.body = user.Keywords;
+  ctx.body = 200;
 };
 
 exports.submit = async (ctx) => {
