@@ -9,6 +9,12 @@ const getLectureId = (ctx) => {
 
 exports.lectureKeywords = async (ctx) => {
   const LectureId = getLectureId(ctx);
+  ctx.assert(LectureId, 400, '400: LectureId not sent');
+  const lecture = await models.Lecture.findOne({
+    where: { id: LectureId },
+  });
+
+  ctx.assert(lecture, 404, '404: Lecture not found');
 
   const keywords = await models.Keyword.findAll({
     where: { LectureId },
@@ -16,6 +22,25 @@ exports.lectureKeywords = async (ctx) => {
   });
 
   ctx.body = keywords;
+};
+
+exports.dropVote = async (ctx) => {
+  console.log('here');
+
+  const UserId = await checkAndGetUserId(ctx);
+  const user = await models.User.findOne({
+    where: { id: UserId },
+    include: {
+      model: models.Keyword,
+      include: models.User,
+    },
+  });
+
+  console.log(user.Keywords);
+  // user.Keywords = [];
+  await models.Keyword.destroy({ where: { UserId: user.id } });
+  await user.reload();
+  ctx.body = user.Keywords;
 };
 
 exports.submit = async (ctx) => {
