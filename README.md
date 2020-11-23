@@ -15,8 +15,10 @@ seeders
 
 ## routes
 In routes, there are routers that communicate with front end by request. For example in ./user/index.js, router get front-end's post request "login", and implement login function in ./user/user.js.
-    
+
 ./user/index.js
+
+
     const Router = require('koa-router');
     const user = new Router();
     const userCtrl = require('./user');
@@ -26,6 +28,8 @@ In routes, there are routers that communicate with front end by request. For exa
     
     
 ./user/user.js
+
+
     ...
     exports.login = async (ctx) => {
       const { email, password } = ctx.request.body;
@@ -33,7 +37,6 @@ In routes, there are routers that communicate with front end by request. For exa
       ctx.status = 204;
     };
     ...
-
 
 
 ## Tools We've Used
