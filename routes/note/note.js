@@ -56,3 +56,13 @@ exports.clap = async (ctx) => {
 
   ctx.status = 204;
 };
+
+exports.getClap = async (ctx) => {
+  const noteId = ctx.params.noteId;
+
+  const note = await models.Note.findOne({
+    where: { id: noteId },
+  });
+  console.log(note.clap);
+  ctx.body = answer.clap;
+};
