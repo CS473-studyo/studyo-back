@@ -41,7 +41,10 @@ exports.login = async (ctx) => {
 
 exports.check = async (ctx) => {
   const id = await checkAndGetUserId(ctx);
-  ctx.body = id;
+  const user = await models.User.findOne({
+    where: { id },
+  });
+  ctx.body = { id, name: user.name };
 };
 
 exports.logout = async (ctx) => {
