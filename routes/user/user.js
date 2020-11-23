@@ -5,10 +5,9 @@ const { checkAndGetUserId } = require('@utils/auth');
 
 exports.register = async (ctx) => {
   const { name, email, password, key } = ctx.request.body;
-  ctx.assert(!process.env.ADMIN_KEY || key === process.env.ADMIN_KEY, 404);
   const res = await models.User.findOne({
     where: { email },
-    attributes: { include: ['email', 'password', 'salt'] },
+    attributes: ['email', 'password', 'salt'],
   });
   ctx.assert(!res, 400, 'The email is already taken.');
   // Generate random string of length 16
