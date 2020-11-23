@@ -41,6 +41,7 @@ exports.answers = async (ctx) => {
 
   const answers = await models.Answer.findAll({
     where: { QuestionId },
+    include: models.User,
   });
 
   ctx.body = answers;
