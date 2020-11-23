@@ -27,6 +27,7 @@ exports.submit = async (ctx) => {
   const note = await models.Note.findOne({
     where: {
       UserId,
+      LectureId,
     },
   });
 
