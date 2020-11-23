@@ -69,10 +69,9 @@ exports.clap = async (ctx) => {
 exports.getClap = async (ctx) => {
   const answerId = ctx.params.answerId;
 
-  const clap = await models.Answer.findOne({
+  const answer = await models.Answer.findOne({
     where: { id: answerId },
   });
-  // console.log(clap.clap);
-  ctx.body = clap;
-  ctx.status = 204;
+  console.log(answer.clap);
+  ctx.body = answer.clap;
 };
