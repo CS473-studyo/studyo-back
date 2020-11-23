@@ -43,5 +43,5 @@ In routes, there are routers that communicate with front end by request. For exa
 
 
 ## Tools We've Used
-* Node.js
-* MySQL
+- [Node.js](https://nodejs.org)
+- [MySQL](https://www.mysql.com)
