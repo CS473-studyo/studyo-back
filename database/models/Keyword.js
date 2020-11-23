@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       votes: {
         type: DataTypes.VIRTUAL,
         get: function () {
-          return this.Users.length;
+          return this.Users ? this.Users.length : null;
         },
       },
     },

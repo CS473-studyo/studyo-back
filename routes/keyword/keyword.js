@@ -78,3 +78,14 @@ exports.vote = async (ctx) => {
   ctx.body = keyword.id;
   ctx.status = 200;
 };
+
+exports.userKeywords = async (ctx) => {
+  const UserId = await checkAndGetUserId(ctx);
+  const LectureId = getLectureId(ctx);
+
+  const user = await models.User.findOne({ where: { id: UserId } });
+
+  const keywords = await user.getKeywords();
+
+  ctx.body = keywords;
+};
