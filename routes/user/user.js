@@ -21,9 +21,10 @@ exports.register = async (ctx) => {
     password: value,
   });
 
-  const courses = await models.Course.findAll();
-  await newUser.addCourses(courses);
-  await newUser.save();
+  models.Course.findAll().then(async (courses) => {
+    await newUser.addCourses(courses);
+    await newUser.save();
+  });
 
   ctx.response.body = newUser;
 };
