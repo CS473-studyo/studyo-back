@@ -87,5 +87,9 @@ exports.userKeywords = async (ctx) => {
 
   const keywords = await user.getKeywords();
 
-  ctx.body = keywords;
+  const lectureKeywords = keywords.filter(
+    (keyword) => keyword.LectureId === LectureId
+  );
+
+  ctx.body = lectureKeywords;
 };
