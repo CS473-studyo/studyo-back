@@ -14,12 +14,18 @@ exports.register = async (ctx) => {
   // Generate random string of length 16
   const salt = getRandomString(16);
   const value = hashed(password, salt);
-  ctx.response.body = await models.User.create({
+  const newUser = await models.User.create({
     name,
     email,
     salt,
     password: value,
   });
+
+  const courses = await models.Course.findAll();
+  await newUser.addCourses(courses);
+  await newUser.save();
+
+  ctx.response.body = newUser;
 };
 
 exports.login = async (ctx) => {
