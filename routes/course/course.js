@@ -77,7 +77,7 @@ exports.join = async (ctx) => {
 
   const user = await models.User.findOne({ where: { id: UserId } });
 
-  const CourseId = ctx.params.courseId;
+  const { CourseId } = ctx.params;
   ctx.assert(CourseId, 400, '400: CourseId not sent');
 
   const course = await models.Course.findOne({

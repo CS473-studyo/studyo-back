@@ -4,8 +4,8 @@ const lectureRouter = new Router();
 
 const lecture = require('./lecture');
 
-lectureRouter.get('/:courseId', lecture.courseLectures);
-lectureRouter.post('/pdf/:lectureId', lecture.uploadPdf);
-lectureRouter.get('/info/:lectureId', lecture.lectureInfo);
+lectureRouter.get('/:CourseId', lecture.courseLectures);
+lectureRouter.post('/pdf/:LectureId', lecture.uploadPdf);
+lectureRouter.get('/info/:LectureId', lecture.lectureInfo);
 
 module.exports = lectureRouter;

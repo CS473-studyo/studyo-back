@@ -2,7 +2,7 @@ const models = require('@models');
 const { uploadFile } = require('@utils/aws');
 
 exports.courseLectures = async (ctx) => {
-  const CourseId = ctx.params.courseId;
+  const { CourseId } = ctx.params;
   ctx.assert(CourseId, 400, '400: CourseId not sent');
 
   const lectures = await models.Lecture.findAll({
@@ -14,7 +14,7 @@ exports.courseLectures = async (ctx) => {
 };
 
 exports.uploadPdf = async (ctx) => {
-  const LectureId = ctx.params.lectureId;
+  const { LectureId } = ctx.params;
   ctx.assert(LectureId, 400, '400: LectureId not sent');
 
   const lecture = await models.Lecture.findOne({
@@ -39,7 +39,7 @@ exports.uploadPdf = async (ctx) => {
 };
 
 exports.lectureInfo = async (ctx) => {
-  const LectureId = ctx.params.lectureId;
+  const { LectureId } = ctx.params;
   ctx.assert(LectureId, 400, '400: LectureId not sent');
 
   const lecture = await models.Lecture.findOne({

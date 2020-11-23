@@ -2,10 +2,44 @@ const models = require('@models');
 const { checkAndGetUserId } = require('@utils/auth');
 const { uploadFile } = require('@utils/aws');
 
+exports.clap = async (ctx) => {
+  await checkAndGetUserId(ctx);
+  const { NoteId } = ctx.params;
+  ctx.assert(NoteId, 400, '400: NoteId not sent');
+  await models.Note.increment('clap', { where: { id: NoteId } });
+
+  ctx.status = 204;
+};
+
+exports.getClap = async (ctx) => {
+  const { NoteId } = ctx.params;
+  ctx.assert(NoteId, 400, '400: NoteId not sent');
+
+  const note = await models.Note.findOne({
+    where: { id: NoteId },
+  });
+
+  ctx.assert(note, 404, '404: Note not found');
+
+  ctx.body = note.clap;
+};
+
+exports.lectureNotes = async (ctx) => {
+  const { LectureId } = ctx.params;
+  ctx.assert(LectureId, 400, '400: LectureId not sent');
+
+  const notes = await models.Note.findAll({
+    where: { LectureId },
+    include: models.User,
+  });
+
+  ctx.body = notes;
+};
+
 exports.submit = async (ctx) => {
   const UserId = await checkAndGetUserId(ctx);
 
-  const LectureId = ctx.params.lectureId;
+  const { LectureId } = ctx.params;
   ctx.assert(LectureId, 400, '400: LectureId not sent');
   const lecture = await models.Lecture.findOne({
     where: { id: LectureId },
@@ -46,23 +80,4 @@ exports.submit = async (ctx) => {
   });
 
   ctx.body = { key, url };
-};
-
-exports.clap = async (ctx) => {
-  await checkAndGetUserId(ctx);
-  const NoteId = ctx.params.noteId;
-  ctx.assert(NoteId, 400, '400: NoteId not sent');
-  await models.Note.increment('clap', { where: { id: NoteId } });
-
-  ctx.status = 204;
-};
-
-exports.getClap = async (ctx) => {
-  const noteId = ctx.params.noteId;
-
-  const note = await models.Note.findOne({
-    where: { id: noteId },
-  });
-  console.log(note.clap);
-  ctx.body = answer.clap;
 };

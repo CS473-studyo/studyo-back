@@ -5,7 +5,7 @@ exports.submit = async (ctx) => {
   const UserId = await checkAndGetUserId(ctx);
 
   const { title, content } = ctx.request.body;
-  const LectureId = ctx.params.lectureId;
+  const { LectureId } = ctx.params;
   ctx.assert(LectureId, 400, '400: LectureId not sent');
 
   const question = await models.Question.create({
@@ -36,7 +36,7 @@ exports.userQuestions = async (ctx) => {
 };
 
 exports.lectureQuestions = async (ctx) => {
-  const LectureId = ctx.params.lectureId;
+  const { LectureId } = ctx.params;
   ctx.assert(LectureId, 400, '400: LectureId not sent');
 
   const quizzes = await models.Question.findAll({
@@ -48,7 +48,7 @@ exports.lectureQuestions = async (ctx) => {
 };
 
 exports.getQuestion = async (ctx) => {
-  const QuestionId = ctx.params.questionId;
+  const { QuestionId } = ctx.params;
   ctx.assert(QuestionId, 400, '400: LectureId not sent');
 
   const quiz = await models.Question.findOne({
