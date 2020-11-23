@@ -3,7 +3,7 @@
 <br/>
 <img src="https://img.shields.io/badge/node-12.16.1-brightgreen" />
 </p>
-This project is for the Milestone 4: High-Fi Prototype of **KAIST CS473 Introduction to Social Computing**.
+<p>This project is for the Milestone 4: High-Fi Prototype of <b>KAIST CS473 Introduction to Social Computing</b>.<p/>
 
 # studyo-back
 Start studyo-back with:
