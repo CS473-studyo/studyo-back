@@ -24,6 +24,10 @@ exports.userQuestions = async (ctx) => {
 
   const questions = await models.Question.findAll({
     where: { UserId },
+    include: {
+      model: models.Lecture,
+      attributes: ['number'],
+    },
   });
 
   ctx.body = questions;
