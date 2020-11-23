@@ -24,23 +24,11 @@ exports.lectureKeywords = async (ctx) => {
   ctx.body = keywords;
 };
 
-exports.dropVote = async (ctx) => {
-  console.log('here');
-
+exports.deleteVotes = async (ctx) => {
   const UserId = await checkAndGetUserId(ctx);
-  const user = await models.User.findOne({
-    where: { id: UserId },
-    include: {
-      model: models.Keyword,
-      include: models.User,
-    },
-  });
 
-  console.log(user.Keywords);
-  // user.Keywords = [];
-  await models.User_Keyword.destroy({ where: { UserId: user.id } });
-  await user.reload();
-  ctx.body = 200;
+  await models.User_Keyword.destroy({ where: { UserId } });
+  ctx.body = 204;
 };
 
 exports.submit = async (ctx) => {
