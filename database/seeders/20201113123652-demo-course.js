@@ -13,19 +13,9 @@ module.exports = {
      */
     await models.Course.bulkCreate([
       {
-        name: 'Social Computing',
-        professor: 'Juho Kim',
-        code: 'CS473',
-      },
-      {
-        name: 'Social Computing 2',
-        professor: 'Juho Kim 2',
-        code: 'CS472',
-      },
-      {
-        name: 'Social Computing 3',
-        professor: 'Juho Kim 3',
-        code: 'CS475',
+        name: 'Introduction to Programming',
+        professor: 'Jongmoon Baik',
+        code: 'CS101',
       },
     ]);
   },

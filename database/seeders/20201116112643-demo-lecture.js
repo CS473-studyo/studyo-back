@@ -13,7 +13,7 @@ module.exports = {
      */
 
     const course = await models.Course.findOne({
-      where: { code: 'CS473' },
+      where: { code: 'CS101' },
     });
 
     const CourseId = course.id;
@@ -22,17 +22,57 @@ module.exports = {
       {
         CourseId,
         number: 1,
-        date: '2020 Aug. 8',
+        date: '2020 Sep. 7',
       },
       {
         CourseId,
         number: 2,
-        date: '2020 Aug. 10',
+        date: '2020 Sep. 14',
       },
       {
         CourseId,
         number: 3,
-        date: '2020 Aug. 15',
+        date: '2020 Sep. 21',
+      },
+      {
+        CourseId,
+        number: 4,
+        date: '2020 Sep. 28',
+      },
+      {
+        CourseId,
+        number: 5,
+        date: '2020 Oct. 5',
+      },
+      {
+        CourseId,
+        number: 6,
+        date: '2020 Oct. 26',
+      },
+      {
+        CourseId,
+        number: 7,
+        date: '2020 Nov. 2',
+      },
+      {
+        CourseId,
+        number: 8,
+        date: '2020 Nov. 9',
+      },
+      {
+        CourseId,
+        number: 9,
+        date: '2020 Nov. 16',
+      },
+      {
+        CourseId,
+        number: 10,
+        date: '2020 Nov. 23',
+      },
+      {
+        CourseId,
+        number: 11,
+        date: '2020 Nov. 30',
       },
     ]);
   },
