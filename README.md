@@ -14,6 +14,11 @@ models
 seeders
 
 ## routes
+In routes, there are routers that communicate with front end. 
+
+  asdfasdf
+  
+
 
 ## Tools We've Used
 * Node.js
