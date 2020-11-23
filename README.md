@@ -14,9 +14,18 @@ models
 seeders
 
 ## routes
-In routes, there are routers that communicate with front end. 
+In routes, there are routers that communicate with front end by request. For example, in ./user/index.js,   
 
-    asdfasdf
+    const Router = require('koa-router');
+    const user = new Router();
+    const userCtrl = require('./user');
+    
+    user.post('/register', userCtrl.register);
+    user.post('/login', userCtrl.login);
+    ...
+
+
+module.exports = user;
   
 
 
