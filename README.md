@@ -12,7 +12,7 @@ npm start
 ```
 
 ## database
-Database consists of 3 folder : ./migrations, ./models, ./seeders. Each has our table structure. We have
+Database consists of 3 folder : ./migrations, ./models, ./seeders. Each has our table structure. We have tables below.
 - user
 - course
 - lecture
