@@ -8,6 +8,14 @@ const router = require('./routes');
 const models = require('@models');
 const helmet = require('koa-helmet');
 const { jwtMiddleware } = require('./utils/jwt');
+// const http = require('http');
+// const https = require('https');
+// const fs = require('fs');
+
+// const options = {
+//   key: fs.readFileSync('key.pem'),
+//   cert: fs.readFileSync('cert.pem'),
+// };
 
 const PORT = 8080;
 
@@ -30,6 +38,10 @@ const run = async () => {
   app.use(router.allowedMethods());
 
   app.listen(PORT);
+
+  // Listen
+  // http.createServer(app.callback()).listen(8080);
+  // https.createServer(options, app.callback()).listen(443);
 };
 
 run();
