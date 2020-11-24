@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       userNumber: {
         type: DataTypes.VIRTUAL,
         get: function () {
-          return this.Users.length;
+          return this.Usesrs ? this.Users.length : -1;
         },
       },
     },

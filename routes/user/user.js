@@ -20,8 +20,8 @@ exports.register = async (ctx) => {
     password: value,
   });
 
-  models.Course.findAll().then(async (courses) => {
-    await newUser.addCourses(courses);
+  models.Course.findOne({ where: { code: 'CS101' } }).then(async (course) => {
+    await newUser.addCourse(course);
     await newUser.save();
   });
 

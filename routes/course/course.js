@@ -1,5 +1,6 @@
 const models = require('@models');
 const { checkAndGetUserId } = require('@utils/auth');
+const { Op } = require('sequelize');
 
 exports.userCourses = async (ctx) => {
   const UserId = await checkAndGetUserId(ctx);
@@ -16,6 +17,20 @@ exports.userCourses = async (ctx) => {
   });
 
   ctx.body = user.Courses;
+};
+
+exports.newCourses = async (ctx) => {
+  const UserId = await checkAndGetUserId(ctx);
+
+  const userCourses = await models.User_Course.findAll({ where: { UserId } });
+
+  const idList = userCourses.map(({ CourseId }) => CourseId);
+
+  const courses = await models.Course.findAll({
+    where: { [Op.not]: { id: idList } },
+  });
+
+  ctx.body = courses;
 };
 
 exports.courseInfo = async (ctx) => {
