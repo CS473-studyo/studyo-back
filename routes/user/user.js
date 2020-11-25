@@ -46,10 +46,13 @@ exports.login = async (ctx) => {
 };
 
 exports.check = async (ctx) => {
-  const id = await checkAndGetUserId(ctx);
+  ctx.assert(ctx.request.user, 401, '401: Unauthorized user');
+  const { id } = ctx.request.user;
   const user = await models.User.findOne({
     where: { id },
+    attributes: { include: ['email', 'password', 'salt'] },
   });
+  ctx.assert(user, 401, '401: Unauthorized user');
   ctx.body = { id, name: user.name };
 };
 
