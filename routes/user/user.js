@@ -10,6 +10,8 @@ exports.register = async (ctx) => {
     attributes: ['email', 'password', 'salt'],
   });
   ctx.assert(!res, 400, 'The email is already taken.');
+  ctx.assert(email.includes('@kaist.ac.kr'), 400, 'Please use your @kaist.ac.kr mail.');
+  
   // Generate random string of length 16
   const salt = getRandomString(16);
   const value = hashed(password, salt);
