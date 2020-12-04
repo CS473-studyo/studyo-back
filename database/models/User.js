@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       password: DataTypes.STRING,
       salt: DataTypes.STRING,
       name: DataTypes.STRING,
+      admin: DataTypes.INTEGER,
       isSelected: {
         type: DataTypes.VIRTUAL,
         get: function () {

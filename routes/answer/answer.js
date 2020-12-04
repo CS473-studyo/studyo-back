@@ -30,6 +30,7 @@ exports.submit = async (ctx) => {
     UserId,
     content,
     clap: 0,
+    isSelected: false,
   });
 
   ctx.assert(newAnswer, 500, '500: Answer could not be created');
@@ -75,4 +76,21 @@ exports.getClap = async (ctx) => {
   });
   console.log(answer.clap);
   ctx.body = answer.clap;
+};
+
+exports.select = async (ctx) => {
+  const answerId = ctx.params.answerId;
+  const UserId = checkAndGetUserId(ctx);
+
+  ctx.assert(answerId, 400, '400: AnswerId not sent');
+
+  const answer = await models.Answer.findOne({
+    where: { id: answerId },
+  });
+
+  ctx.assert(answer, 404, '404: answer not found');
+
+  answer.isSelected = true;
+  answer.save();
+  ctx.status = 204;
 };

@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       clap: DataTypes.INTEGER,
       content: DataTypes.STRING,
+      isSelected: DataTypes.BOOLEAN,
     },
     {
       freezeTableName: true,
