@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
       password: DataTypes.STRING,
       salt: DataTypes.STRING,
       name: DataTypes.STRING,
+      isSelected: {
+        type: DataTypes.VIRTUAL,
+        get: function () {
+          const notes = this.Notes;
+          if (!notes) return false;
+          return notes.some((note) => note.isSelected);
+        },
+      },
     },
     {
       freezeTableName: true,
