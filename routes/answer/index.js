@@ -10,5 +10,6 @@ answerRouter.get('/user/:questionId', answer.userAnswer);
 answerRouter.post('/clap/:answerId', answer.clap);
 answerRouter.get('/clap/:answerId', answer.getClap);
 answerRouter.post('/select/:answerId', answer.select);
+answerRouter.post('/delete/:AnswerId/:UserId', answer.deleteAnswer);
 
 module.exports = answerRouter;
