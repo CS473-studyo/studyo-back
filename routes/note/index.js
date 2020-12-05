@@ -8,5 +8,6 @@ noteRouter.post('/clap/:NoteId', note.clap);
 noteRouter.get('/clap/:NoteId', note.getClap);
 noteRouter.post('/:LectureId', note.submit);
 noteRouter.get('/:LectureId', note.lectureNotes);
+noteRouter.post('/select/:NoteId', note.select);
 
 module.exports = noteRouter;

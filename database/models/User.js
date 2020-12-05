@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       salt: DataTypes.STRING,
       name: DataTypes.STRING,
       admin: DataTypes.INTEGER,
+      badge: DataTypes.BOOLEAN,
       isSelected: {
         type: DataTypes.VIRTUAL,
         get: function () {
@@ -39,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
       through: 'User_Keyword',
       timestamps: false,
     });
+    // User.belongsToMany(models.Note, {
+    //   through: 'Admin_Note',
+    //   timestamps: false,
+    // });
     User.hasMany(models.Answer);
     User.hasMany(models.Keyword);
     User.hasMany(models.Note);

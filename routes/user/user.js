@@ -19,6 +19,7 @@ exports.register = async (ctx) => {
     salt,
     password: value,
     admin: 0,
+    badge: false,
   });
 
   models.Course.findOne({ where: { code: 'CS101' } }).then(async (course) => {
@@ -69,6 +70,8 @@ exports.isadmin = async (ctx) => {
     where: { id: UserId },
     attributes: { include: ['email', 'password', 'salt', 'admin'] },
   });
+
+  ctx.assert(user, 404, '404: user not found');
 
   if (user.admin) {
     ctx.body = 1;

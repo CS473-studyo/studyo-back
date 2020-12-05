@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Note.belongsTo(models.Lecture);
     Note.belongsTo(models.User);
+    // Note.belongsToMany(models.User, {
+    //   through: 'Admin_Note',
+    //   timestamps: false,
+    // });
   };
   return Note;
 };
