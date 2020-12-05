@@ -10,6 +10,6 @@ noteRouter.post('/:LectureId', note.submit);
 noteRouter.post('/text/:LectureId', note.comment);
 noteRouter.get('/user/:LectureId/:page', note.userLectureNotes);
 noteRouter.get('/other/:LectureId/:page', note.otherLectureNotes);
-noteRouter.post('/delete/:LectureId/:UserId', note.deleteNotes);
+noteRouter.delete('/:LectureId/:page', note.deleteNotes);
 
 module.exports = noteRouter;
