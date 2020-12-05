@@ -55,7 +55,7 @@ exports.check = async (ctx) => {
     attributes: { include: ['email', 'password', 'salt'] },
   });
   ctx.assert(user, 401, '401: Unauthorized user');
-  ctx.body = { id, name: user.name };
+  ctx.body = { id, name: user.name, admin: user.admin };
 };
 
 exports.logout = async (ctx) => {

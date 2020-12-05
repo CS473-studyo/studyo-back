@@ -62,9 +62,25 @@ exports.vote = async (ctx) => {
 
   ctx.assert(keyword, 404, '404: Keyword not found');
 
-  keyword.addUser(user);
+  await keyword.addUser(user);
   ctx.body = keyword.id;
   ctx.status = 200;
+};
+
+exports.cancel = async (ctx) => {
+  const UserId = await checkAndGetUserId(ctx);
+  const { KeywordId } = ctx.params;
+  ctx.assert(KeywordId, 400, '400: KeywordId not sent');
+
+  const relation = await models.User_Keyword.findOne({
+    where: { UserId, KeywordId },
+  });
+
+  ctx.assert(relation, 404, '404: Relation not found');
+
+  await models.User_Keyword.destroy({ where: { UserId, KeywordId } });
+
+  ctx.status = 204;
 };
 
 exports.userKeywords = async (ctx) => {
