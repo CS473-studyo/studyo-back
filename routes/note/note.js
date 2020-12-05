@@ -86,7 +86,7 @@ exports.submit = async (ctx) => {
   });
   ctx.assert(user, 404, '404: User not found');
 
-  user.badge = true;
+  user.badge = user.badge + 1;
   await user.save();
 
   const fileName = `${UserId}--${LectureId}.pdf`;

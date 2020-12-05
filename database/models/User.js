@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       salt: DataTypes.STRING,
       name: DataTypes.STRING,
       admin: DataTypes.INTEGER,
-      badge: DataTypes.BOOLEAN,
+      badge: DataTypes.INTEGER,
       isSelected: {
         type: DataTypes.VIRTUAL,
         get: function () {

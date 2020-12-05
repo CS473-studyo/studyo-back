@@ -16,6 +16,10 @@ exports.submit = async (ctx) => {
 
   ctx.assert(question, 404, '404: Question not found');
 
+  const user = await models.User.findOne({
+    where: { id: UserId },
+  });
+
   const answer = await models.Answer.findOne({ where: { QuestionId, UserId } });
 
   if (answer) {
@@ -34,6 +38,10 @@ exports.submit = async (ctx) => {
   });
 
   ctx.assert(newAnswer, 500, '500: Answer could not be created');
+
+  user.badge = user.badge + 1;
+  await user.save();
+
   ctx.status = 204;
 };
 
