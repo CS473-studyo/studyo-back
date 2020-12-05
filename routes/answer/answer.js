@@ -102,3 +102,22 @@ exports.select = async (ctx) => {
   answer.save();
   ctx.status = 204;
 };
+
+exports.deleteAnswer = async (ctx) => {
+  const loginuser = await checkAndGetUserId(ctx);
+  const { UserId, AnswerId } = ctx.params;
+
+  if (loginuser != UserId) {
+    ctx.body = false;
+    return;
+  }
+
+  const answer = await models.Answer.findOne({
+    where: { UserId, AnswerId },
+  });
+
+  ctx.assert(note, 404, '404: note not found');
+
+  await models.Answer.destroy({ where: { UserId, AnswerId } });
+  ctx.status = 204;
+};

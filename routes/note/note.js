@@ -160,20 +160,15 @@ exports.comment = async (ctx) => {
 };
 
 exports.deleteNotes = async (ctx) => {
-  const loginuser = await checkAndGetUserId(ctx);
-  const { UserId, LectureId } = ctx.params;
-
-  if (loginuser != UserId) {
-    ctx.body = false;
-    return;
-  }
+  const UserId = await checkAndGetUserId(ctx);
+  const { LectureId, page } = ctx.params;
 
   const note = await models.Note.findOne({
-    where: { UserId, LectureId },
+    where: { UserId, LectureId, page },
   });
 
   ctx.assert(note, 404, '404: note not found');
 
-  await models.Note.destroy({ where: { UserId, LectureId } });
+  await models.Note.destroy({ where: { UserId, LectureId, page } });
   ctx.status = 204;
 };
