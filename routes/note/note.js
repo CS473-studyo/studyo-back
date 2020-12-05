@@ -1,35 +1,69 @@
 const models = require('@models');
+const { Op } = require('sequelize');
 const { checkAndGetUserId } = require('@utils/auth');
 const { uploadFile } = require('@utils/aws');
 
 exports.clap = async (ctx) => {
   await checkAndGetUserId(ctx);
-  const { NoteId } = ctx.params;
-  ctx.assert(NoteId, 400, '400: NoteId not sent');
-  await models.Note.increment('clap', { where: { id: NoteId } });
+  const { UserId, LectureId, page } = ctx.request.body;
+  ctx.assert(LectureId, 400, '400: LectureId not sent');
+
+  const note = await models.Note.findOne({
+    where: {
+      UserId,
+      LectureId,
+      page,
+    },
+  });
+
+  if (note) {
+    note.clap += 1;
+    await note.save();
+    ctx.status = 204;
+    return;
+  }
+
+  await models.Note.create({
+    UserId,
+    LectureId,
+    page,
+    clap: 1,
+  });
 
   ctx.status = 204;
 };
 
 exports.getClap = async (ctx) => {
-  const { NoteId } = ctx.params;
-  ctx.assert(NoteId, 400, '400: NoteId not sent');
+  const { UserId, LectureId, page } = ctx.params;
+  ctx.assert(LectureId, 400, '400: LectureId not sent');
 
   const note = await models.Note.findOne({
-    where: { id: NoteId },
+    where: { UserId, LectureId, page },
   });
 
-  ctx.assert(note, 404, '404: Note not found');
-
-  ctx.body = note.clap;
+  ctx.body = note ? note.clap : 0;
 };
 
-exports.lectureNotes = async (ctx) => {
-  const { LectureId } = ctx.params;
+exports.userLectureNotes = async (ctx) => {
+  const UserId = await checkAndGetUserId(ctx);
+  const { LectureId, page } = ctx.params;
   ctx.assert(LectureId, 400, '400: LectureId not sent');
 
   const notes = await models.Note.findAll({
-    where: { LectureId },
+    where: { LectureId, page: { [Op.or]: [-1, page] }, UserId },
+    include: models.User,
+  });
+
+  ctx.body = notes;
+};
+
+exports.otherLectureNotes = async (ctx) => {
+  const UserId = await checkAndGetUserId(ctx);
+  const { LectureId, page } = ctx.params;
+  ctx.assert(LectureId, 400, '400: LectureId not sent');
+
+  const notes = await models.Note.findAll({
+    where: { LectureId, page: { [Op.or]: [-1, page] }, [Op.not]: { UserId } },
     include: models.User,
   });
 
@@ -62,6 +96,7 @@ exports.submit = async (ctx) => {
     where: {
       UserId,
       LectureId,
+      page: -1,
     },
   });
 
@@ -76,8 +111,41 @@ exports.submit = async (ctx) => {
     UserId,
     LectureId,
     pdf: url,
+    page: -1,
     clap: 0,
   });
 
   ctx.body = { key, url };
+};
+
+exports.comment = async (ctx) => {
+  const UserId = await checkAndGetUserId(ctx);
+  const { LectureId } = ctx.params;
+  const { page, text } = ctx.request.body;
+  ctx.assert(LectureId, 400, '400: NoteId not sent');
+
+  const note = await models.Note.findOne({
+    where: {
+      UserId,
+      LectureId,
+      page,
+    },
+  });
+
+  if (note) {
+    note.text = text;
+    await note.save();
+    ctx.status = 204;
+    return;
+  }
+
+  await models.Note.create({
+    UserId,
+    LectureId,
+    page,
+    text,
+    clap: 0,
+  });
+
+  ctx.status = 204;
 };
