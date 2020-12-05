@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       pdf: DataTypes.STRING,
       clap: DataTypes.INTEGER,
+      page: DataTypes.INTEGER,
+      text: DataTypes.TEXT,
     },
     {
       freezeTableName: true,
