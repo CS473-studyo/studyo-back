@@ -81,13 +81,13 @@ exports.submit = async (ctx) => {
 
   ctx.assert(lecture, 404, '404: Lecture not found');
 
-  const user = modles.User.findOne({
+  const user = await models.User.findOne({
     where: { id: UserId },
   });
-  ctx.assert(user, 404, '404: Lecture not found');
+  ctx.assert(user, 404, '404: User not found');
 
   user.badge = true;
-  user.save();
+  await user.save();
 
   const fileName = `${UserId}--${LectureId}.pdf`;
 
