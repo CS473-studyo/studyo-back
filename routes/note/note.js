@@ -81,6 +81,14 @@ exports.submit = async (ctx) => {
 
   ctx.assert(lecture, 404, '404: Lecture not found');
 
+  const user = modles.User.findOne({
+    where: { id: UserId },
+  });
+  ctx.assert(user, 404, '404: Lecture not found');
+
+  user.badge = true;
+  user.save();
+
   const fileName = `${UserId}--${LectureId}.pdf`;
 
   const { file } = ctx.request.files;
@@ -117,34 +125,6 @@ exports.submit = async (ctx) => {
   });
 
   ctx.body = { key, url };
-};
-
-exports.select = async (ctx) => {
-  const { NoteId } = ctx.params;
-  const valid = await checkAndGetUserId(ctx);
-
-  const note = await models.Note.findOne({
-    where: { id: NoteId },
-    include: {
-      model: models.User,
-      attributes: ['id'],
-    },
-  });
-
-  ctx.assert(note, 404, '404: note not found');
-
-  const UserId = note.UserId;
-
-  const user = await models.User.findOne({
-    where: { id: UserId },
-    include: models.Note,
-  });
-  ctx.assert(user, 404, '404: user not found');
-
-  user.badge = true;
-  user.save();
-  // console.log(models.Admin_Note);
-  ctx.body = user.badge;
 };
 
 exports.comment = async (ctx) => {
