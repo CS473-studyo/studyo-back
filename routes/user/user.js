@@ -60,6 +60,7 @@ exports.check = async (ctx) => {
 
 exports.logout = async (ctx) => {
   ctx.cookies.set(process.env.ACCESS_TOKEN, null);
+  ctx.cookies.set('tutorial', null);
   ctx.status = 204;
 };
 
@@ -78,4 +79,29 @@ exports.isadmin = async (ctx) => {
   } else {
     ctx.body = 0;
   }
+};
+
+exports.getTutorial = async (ctx) => {
+  const cookie = ctx.cookies.get('tutorial');
+  if (cookie) {
+    ctx.body = true;
+    return;
+  }
+  const UserId = await checkAndGetUserId(ctx);
+  const user = await models.User.findOne({ where: { id: UserId } });
+  if (user.tutorial) {
+    ctx.cookies.set('tutorial', getRandomString(16), {
+      maxAge: 1000 * 60 * 60 * 24,
+      overwrite: true,
+    });
+  }
+  ctx.body = user.tutorial;
+};
+
+exports.checkTutorial = async (ctx) => {
+  const UserId = await checkAndGetUserId(ctx);
+  const user = await models.User.findOne({ where: { id: UserId } });
+  user.tutorial = true;
+  await user.save();
+  ctx.status = 204;
 };

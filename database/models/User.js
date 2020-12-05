@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       admin: DataTypes.INTEGER,
       badge: DataTypes.INTEGER,
+      tutorial: DataTypes.BOOLEAN,
       isSelected: {
         type: DataTypes.VIRTUAL,
         get: function () {
