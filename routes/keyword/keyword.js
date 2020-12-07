@@ -20,7 +20,6 @@ exports.lectureKeywords = async (ctx) => {
     where: { LectureId },
     include: models.User,
   });
-
   ctx.body = keywords;
 };
 

@@ -89,12 +89,10 @@ exports.getTutorial = async (ctx) => {
   }
   const UserId = await checkAndGetUserId(ctx);
   const user = await models.User.findOne({ where: { id: UserId } });
-  if (user.tutorial) {
-    ctx.cookies.set('tutorial', getRandomString(16), {
-      maxAge: 1000 * 60 * 60 * 24,
-      overwrite: true,
-    });
-  }
+  ctx.cookies.set('tutorial', getRandomString(16), {
+    maxAge: 1000 * 60 * 60 * 24,
+    overwrite: true,
+  });
   ctx.body = user.tutorial;
 };
 
