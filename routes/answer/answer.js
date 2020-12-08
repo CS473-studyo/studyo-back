@@ -87,8 +87,14 @@ exports.getClap = async (ctx) => {
 };
 
 exports.select = async (ctx) => {
-  const answerId = ctx.params.answerId;
-  const UserId = checkAndGetUserId(ctx);
+  const { answerId } = ctx.params;
+  const UserId = await checkAndGetUserId(ctx);
+
+  const user = await models.User.findOne({
+    where: { id: UserId },
+  });
+
+  ctx.assert(user.admin, 401);
 
   ctx.assert(answerId, 400, '400: AnswerId not sent');
 
@@ -98,8 +104,8 @@ exports.select = async (ctx) => {
 
   ctx.assert(answer, 404, '404: answer not found');
 
-  answer.isSelected = true;
-  answer.save();
+  answer.isSelected = !answer.isSelected;
+  await answer.save();
   ctx.status = 204;
 };
 
